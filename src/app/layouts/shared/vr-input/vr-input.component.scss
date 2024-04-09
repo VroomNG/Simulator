@@ -1,0 +1,11 @@
+.isError {
+    border: red 2px solid;
+}
+.form-error {
+    color: red;
+    font-size: 12px;
+    line-height: 20px;
+    margin-bottom: -10px;
+    font-weight: 500;
+    z-index: 9999;
+}

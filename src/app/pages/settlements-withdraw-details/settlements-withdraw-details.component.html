@@ -1,0 +1,79 @@
+<div class="main-container">
+    <div class="header">
+        <div class="view-admin-grid">
+            <div class="container">
+                <div class="card">
+                    <div class="grid-header">
+                        <div class="title">
+                            <h6>Drivers Payable by admin</h6>
+                        </div>
+                        <div class="search">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input type="text" pInputText placeholder="Search">         
+                            </span>
+                        </div>
+                        <div class="export">
+                            <button class="button" type="submit" label="submit">
+                                Export
+                             </button>
+                        </div>
+                    </div> 
+                    <div>
+                    <p-table
+                        [value]="withdraw"
+                        [paginator]="true"
+                        [rows]="6"
+                        [showCurrentPageReport]="false"
+                        [tableStyle]="{ 'min-width': '50rem' }"
+                        currentPageReportTemplate=""
+                        [rowsPerPageOptions]="[10, 25, 50]"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ;">
+                                <th style="width:5%">DRIVER CODE</th>
+                                <th style="width:5%">DRIVER NAME</th>
+                                <th style="width:5%">EMAIL</th>
+                                <th style="width:5%">PHONE</th>
+                                <th style="width:10%">WITHDRAW
+                                    AMOUNT</th>
+                                <th style="width:10%">WITHDRAW
+                                    REQUEST DATE </th>
+                                <th style="width:10%">STATUS </th>
+                                <th style="width:10%">ACTION </th>                                
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-withdraw>
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ">
+                                <td>{{ withdraw.driver_code }}</td>
+                                <td>{{ withdraw.driver_name }}</td>
+                                <td>{{ withdraw.driver_email }}</td>
+                                <td>{{ withdraw.phone }}</td>
+                                <td>{{ withdraw.withdrawn_amount }}</td>
+                                <td>{{ withdraw.withdraw_date }}</td>
+                                <td>{{ withdraw.status }}</td>
+                              
+                                <td>
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                    <i class="fa-solid fa-file"></i>
+                                </td>
+                               
+                               
+                            </tr>
+                        </ng-template>
+                        
+                            <ng-template pTemplate="paginatorleft">
+                                <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+                            <ng-template pTemplate="paginatorright">
+                                <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+                        </p-table>  
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+       
+    <div class="footer"></div>
+</div>

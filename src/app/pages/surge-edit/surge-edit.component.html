@@ -1,0 +1,88 @@
+<app-vr-alert *ngIf="showAlert" [color]="alertColor">
+    {{ alertMsg }}
+  </app-vr-alert>
+  <div class="main-container">
+    <div class="header">
+        <div class="add-admin-form">
+           <div class="card">
+            <div class="card-title">
+                <h5>Edit Surge Parameters</h5>
+            </div>
+        <app-loader *ngIf="!surgeParams"></app-loader>
+        <div class="card-body" *ngIf="surgeParams" >
+          <div class="container" *ngIf="isActive">
+            <div class="card-input">
+                <div class="form-group">
+                    <div>
+                        <label htmlFor="free wait time">Heat Map Radius(m)*</label>
+                    </div>
+                    <div class="readonly-input">
+                      {{surgeParams.hmr}}
+                    </div>
+                    <div class="enableForm">
+                      <button type="submit" label="submit" 
+                      class="button btn-primary " (click)="enableForm()">
+                      Update
+                    </button>
+                  </div>
+                </div>
+            </div>
+            <div class="card-input">
+                <div class="form-group">
+                    <div >
+                        <label htmlFor="lastname">Heat Spot Visibility Threshold*</label>
+                    </div>
+                    <div class="readonly-input">
+                        {{surgeParams.hsvt}}
+                    </div>
+                </div> 
+            </div>
+          </div>
+          <form [formGroup]="surgeForm" *ngIf="!isActive">
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="free wait time">Heat Map Radius(m)*</label>
+                            </div>
+                            <input type="text"  name="Heat Map Radius(m)" formControlName="hmr" 
+                            class="form-control form-control-alternative" placeholder="Heat Map Radius(m)">
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="lastname">Heat Spot Visibility Threshold*</label>
+                            </div>
+                            <input type="text" name="Heat Spot Visibility Threshold*" formControlName="hsvt" 
+                            class="form-control form-control-alternative" placeholder="HSVT">
+                        </div>
+                    </div>  
+                </div>
+                <button type="submit" label="submit"  class="button btn-primary " (click)="onSubmit()">
+                   Submit 
+                 </button>
+            </form>   
+        </div>
+    </div>
+    <div class="footer"></div>
+  
+  </div>
+  
+  <!-- <div class="container p-5">
+      <input class="form-control" type="text" placeholder="Search" [(ngModel)]="searchText">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of data | search: searchText">
+            <td>{{e.id}}</td>
+            <td>{{e.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->

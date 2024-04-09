@@ -1,0 +1,50 @@
+p {
+    font-size: 10px;
+}
+
+h5 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-style {
+    display: block;
+    width: 100%;
+    color: rgb(6, 6, 36);            
+}
+
+.form-error {
+    color: rgb(245, 72, 72);
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0px;
+    text-align: justify;
+    line-height: 1.4rem;
+}
+.form-controls {
+    border: 2px solid ;
+    border-radius: 12px;
+    color: #CBD5E1;
+    padding: 12px;
+    width: 100%;
+}
+.form-controls::placeholder {
+    color: rgb(18, 18, 18);
+  }
+
+label {
+    color: #344054;
+}
+
+.password-input {
+    position: relative;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,103 @@
+<p-dialog [(visible)]="displayDialog" [modal]="true" [responsive]="true" [closable]="false" class="absolute">
+  <div class="w-[80vw] h-[35vh] flex justify-center items-center ">
+       <div class="w-[95%] h-[95%] flex flex-col items-center " >
+          <img src="assets/img/theme/logout.png  " class="w-[100px]"  />
+        
+            <h4>Comfirm Logout</h4>
+            <p>Are you sure you want to Logout?</p>
+        
+          
+         <div class=" w-full h-[50px]">
+            <button class="w-full h-full border-2 rounded-3xl bg-[#28094F] text-white  " (click)="logout()" >
+              Log Out
+          </button>
+         </div>
+         <div class=" w-full h-[50px]">
+          <button class="w-full h-full border-2 rounded-3xl bg-[#F0F0F0] text-[#28094F] btn " (click)="close()" >
+              Go back
+          </button>
+         </div>
+       </div>
+  </div>   
+  </p-dialog> 
+
+<div class="main-container flex" style="height: 100vh;">
+  <div class="sidebar h-full d-none d-lg-block d-xl-block d-xxl-block " style="width: 18%; height: 100%; "> 
+    <app-sidebar displayDialog="displayDialog"></app-sidebar >
+  </div> 
+
+  <div class="dashboard h-full" [ngStyle]="{'width.%': isSmallScreen ? 100 : 82}">
+      <div class="h-[8%] w-full border-b-0 border-b-[#EEECF6] md:border-b-2  m:border-b-[#EEECF6] bg-[#F3F4F5] md:bg-white d-flex justify-content-end">
+        
+        <div class="w-[60%] flex items-center md:w-[70%] h-full">
+          <div class="  d-md-none d-lg-none  flex px-4">
+            <span class="w-[40%]">
+              <a [hidden]="false" [routerLink]="['/']">
+                <img src="./assets/img/brand/Logo.png" class="navbar-brand-img" alt="..." style="width: 100px;">
+              </a>
+            </span>
+            <span class="w-[55%]">
+              <button class="mx-0">
+                <img src="./assets/img/Vector.png" class="navbar-brand-img" alt="sidebar">
+              </button>
+           </span>
+          </div>
+        </div>
+
+        <div class="w-[45%] md:w-[30%] h-full d-flex justify-content-center align-items-center">
+            <div class="w-[40px] h-[40px] p-2 rounded-full  mx-2 md:mx-3 bg-[#EEECF6] d-flex justify-content-center align-items-center">
+              <i class="fa-solid fa-bell text-[#57534E]"></i>
+            </div>
+      
+            <div (click)="pDropdown()" class="cursor-pointer d-flex align-items-center">
+             <div class="w-[40px] h-[42px] flex items-center justify-center border-2 hover:border-2 hover:border-green-400 rounded-full">
+                <img src="assets/img/theme/user.png" class="rounded-full cursor-pointer  w-[40px] md:mx-0 "  /> 
+                <div class="bg-green-500 ml-[32px] border-2 border-white mt-4 absolute z-[9999] w-[10px] h-[10px] rounded-full">
+                </div>
+              </div>
+            <div *ngIf="userDetails" class=" text-black mx-2 hidden md:block ">
+              <p class="text-[14px] font-medium capitalize leading-4 text-[#344054]"> {{userDetails.user.user_profile.firstname}} {{userDetails.user.user_profile.lastname}} </p>
+              <p class="text-[12px] font-light leading-4 "> {{userDetails.user.email}} </p>
+            </div>
+         </div>
+        </div>
+        
+          <div class="z-[9999] cursor-pointer card  w-36 h-36 bg-white drop-shadow-xl absolute mr-4 mt-4" *ngIf="showDropdown">
+            <div class="h-[33%] bg-[#FAFAF9] rounded-t-md flex justify-center items-center justify-center red-400">
+              <a routerLink="/user-profile" >
+                <span class="text-brand900  cursor-pointer flex justify-between  hover:font-bold" >
+                  <span class="w-[30%]">
+                    <i class="fa-solid fa-user mx-4"></i>
+                  </span>
+                  <span class="w-[70%] text-[14px] mx-2">My Profile</span>     
+                </span>
+              </a>
+            </div>
+            <div class="h-[32%] flex justify-center cursor-pointer items-center border-y-[0.5px] border-[#EEECF6] justify-center ">
+              <a routerLink="/change-password" >
+              <span class="text-brand900 flex justify-between  hover:font-bold" >
+                <span class="w-[30%]">
+                  <i class="fa-solid fa-lock mx-4"></i>
+                </span>
+                <span class="w-[70%] text-[14px] mx-2">Change Password</span>     
+              </span>
+              </a>
+            </div>
+            <div class="h-[32%] flex items-center  justify-center">
+              <span class="text-brand900 flex justify-between cursor-pointer  hover:font-bold" (click)="onLogOut()" >
+                <span class="w-[30%]">
+                  <i class="fa-solid fa-arrow-right-from-bracket mx-4"></i>
+                </span>
+                <span class="w-[70%] text-[14px] mx-2">Log out</span>     
+              </span>
+            </div>
+        </div>
+        
+      </div>
+      <!-- < Dashboard dynamic content  -->
+      <div class="main-content" style="height:90%">
+          <router-outlet></router-outlet>
+      </div>
+  </div>
+</div>
+

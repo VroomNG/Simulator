@@ -1,0 +1,114 @@
+<app-vr-alert *ngIf="showAlert" [color]="alertColor">
+    {{ alertMsg }}
+</app-vr-alert>
+<div class="main-container">
+    <div class="header">
+        <div class="add-admin-form">
+           <div class="card">
+            <div class="card-title">
+                <h5>Add Discount</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="addDiscount">
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="fistname">Discount code*</label>
+                            </div>
+                             <app-vr-input pInputText [control]="discount_code" type="text" placeholder="Discount Code" ></app-vr-input> 
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="lastname">Title*</label>
+                            </div>
+                             <app-vr-input pInputText [control]="title" type="text" placeholder="Title"></app-vr-input> 
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="email">Description*</label>
+                            </div>
+                            <app-vr-input pInputText [control]="description " type="text" placeholder="Description" ></app-vr-input> 
+                        
+                        
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="phone">Discount Percent*</label>
+                            </div>
+                            <app-vr-input pInputText pKeyFilter="int" [control]="discount_percent" placeholder="Discount Percent"
+                              />
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="phone">Start date*</label>
+                            </div>
+                            <app-vr-input pInputText pKeyFilter="int" [control]="start_date" placeholder=" Start Date"
+                              />
+                        
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="phone">End date*</label>
+                            </div>
+                            <app-vr-input pInputText pKeyFilter="int" [control]="end_date" placeholder=" End Date"
+                              />
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="max_discount_amount">Max Discount Amount*</label>
+                            </div>
+                            <app-vr-input pInputText pKeyFilter="int" [control]="max_discount_amount " placeholder="Max Discount Amount "
+                            />   
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="max_no_of_users">Max Number of Users*</label>
+                            </div>
+                            <app-vr-input pInputText pKeyFilter="int" [control]="max_no_of_users" placeholder="Max Number of Users"
+                            />   
+                        </div>
+                    </div>
+                </div>
+               
+
+                <!-- <div class="btn"> -->
+                    <button type="submit" label="submit"  class="button btn-primary "
+                    (click)="onSubmit()"
+                   
+                    
+                    >
+                       Add 
+                    </button>
+                    <button type="submit" label="submit" class="button btn-secondary" (click)="reset()">
+                       Cancel
+                    </button>
+                <!-- </div> -->
+              </form>
+            </div>
+           </div>
+        </div>
+    </div>
+    <div class="footer"></div>
+
+</div>

@@ -1,0 +1,11 @@
+<div class="flex">
+    <input *ngFor="let digit of otpDigits; let i = index" 
+    #otpInput
+    class="w-[30%] h-[80px] border border-gray-300 rounded-md mr-4 text-center"
+    type="text"  placeholder="*"
+    [value]="otp[i]" 
+    (input)="onInput($event, i)" 
+    (keydown)="onKeyDown($event, otpInput, i)" 
+    (paste)="onPaste($event)">
+</div>
+  

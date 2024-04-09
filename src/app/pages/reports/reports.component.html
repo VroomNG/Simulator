@@ -1,0 +1,69 @@
+
+<div class="main-container">
+    <div class="header">
+        <div class="view-admin-grid">
+            <div class="container">
+                <div class="card">
+                    <div class="grid-header">
+                        <div class="title">
+                            <h6>Reports</h6>
+                        </div>
+                        <div class="search">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input type="text" pInputText placeholder="Search">         
+                            </span>
+                        </div>
+                        <div class="export">
+                            <button class="button" type="submit" label="submit">
+                                Export
+                             </button>
+                        </div>
+                    </div> 
+                    <div>
+                    <app-loader *ngIf="showLoader"></app-loader>
+                    <p-table *ngIf="!showLoader"
+                        [value]="referal"
+                        [paginator]="true"
+                        [rows]="10"
+                        [showCurrentPageReport]="false"
+                        [tableStyle]="{ 'min-width': '60rem' }"
+                        currentPageReportTemplate=""
+                        [rowsPerPageOptions]="[10, 25, 50]"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ;">
+                                <th style="width:2%"> USER ID </th>
+                                <th style="width:5%">FIRST NAME </th>
+                                <th style="width:5%">LAST NAME</th>
+                                <th style="width:5%">REGISTRATION DATE</th>
+                                <th style="width:5%">REFEREE </th>			
+                                <th style="width:5%">EARNED </th>			
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-referal>
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ">
+                               <td>{{referal.userid}}</td>
+                               <td>{{referal.firstname}}</td>
+                               <td>{{referal.lastname}}</td>
+                               <td>{{referal.created_at}}</td>
+                               <td>{{referal.referee}}</td>
+                               <td>{{referal.earned}}</td>
+                            </tr>
+                        </ng-template>
+                        
+                            <ng-template pTemplate="paginatorleft">
+                                <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+                            <ng-template pTemplate="paginatorright">
+                                <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+                        </p-table>  
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+       
+    <div class="footer"></div>
+</div>

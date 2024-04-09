@@ -1,0 +1,18 @@
+<div class="w-full h-[100vh] bg-[#FFFFFF] lg:bg-neutral100 xl:bg-neutral100 flex items-center justify-center ">
+  <div class="w-[90%] lg:w-[80%] h-[80%] rounded-[50px] flex ">
+    <div class="w-[100%] lg:w-[50%] bg-white rounded-l-[0px] lg:rounded-l-[50px] flex items-center justify-center">
+      <div class="w-[100%] lg:w-[80%] h-[90%]" >
+        <div class="h-[10%] flex items-center">
+          <a class="navbar-brand" routerLinkActive="active" [routerLink]="['/login']">
+            <img src="assets/img/brand/Logo.png" class="w-[150px] pt-1" />
+          </a>
+        </div>
+        <div class=" h-[80%] mt-4">
+           <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+    <div class="w-[50%] hidden lg:block bg-brand650 rounded-r-[50px] bg-cover bg-[url('assets/img/Frame.png')]"></div>
+  </div>
+    
+</div>

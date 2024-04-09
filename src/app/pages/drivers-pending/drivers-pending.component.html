@@ -1,0 +1,143 @@
+<div class="main-container">
+    <div class="header">
+        <div class="view-admin-grid">
+            <div class="container">
+                <div class="card">
+                    <div class="grid-header">
+                        <div class="title">
+                            <h6>Unapproved drivers</h6>
+                        </div>
+                        <div class="search">
+                            <div class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input type="text" pInputText placeholder="Search"
+                                [(ngModel)]="searchText"
+                                (input)="applyFilter()"
+                                >           
+                            </div>
+                            <button (click)="clear()" class="clr"><i class="fa-solid fa-arrows-rotate"></i></button> 
+                        </div>
+                        
+                        <div class="export">
+                            <button class="button" type="submit" 
+                            label="submit"  (click)="exportExcel()">
+                                Export
+                             </button>
+                        </div>
+                    </div> 
+                    <div>
+                        <app-loader *ngIf="showLoader">
+                        </app-loader>
+                    <p-table *ngIf="!showLoader"
+                        [value]="pending"
+                        [paginator]="true"
+                        [rows]="10"
+                        [showCurrentPageReport]="false"
+                        [tableStyle]="{ 'min-width': '100rem' }"
+                        currentPageReportTemplate=""
+                        [rowsPerPageOptions]="[10, 25, 50]"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ;">
+                                <!-- CODE 	DRIVER NAME	CITY	VECHILE TYPE	EMAIL	PHONE	REGISTERED ON	WALLET	STATUS	ONLINE STATUS	LAST TRIP DATE 	ACTION	INACTIVE	NOTIFY -->
+                                <th style="width:5%">CODE </th>
+                                <th style="width:20%">DRIVER NAME </th>
+                                <th style="width:15%">CITY </th>
+                                <th style="width:5%">VEHICLE TYPE </th>
+                                <th style="width:5%">EMAIL </th>
+                                <th style="width:5%">PHONE </th>
+                                <th style="width:20%">REGISTERED ON</th>
+                                <th style="width:5%">WALLET </th>
+                                <th style="width:5%">STATUS </th>
+                                <th style="width:5%">ONLINE STATUS </th>
+                                <th style="width:5%">LAST TRIP DATE </th>
+                                <th style="width:5%">ACTION </th>     
+                                <!-- <th style="width:5%">INACTIVE </th>     
+                                <th style="width:5%">NOTIFY</th> -->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-pending>
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ">
+                                <td> DRV00{{ pending.id }}</td>
+                                <td>{{pending.firstname}} {{pending.lastname}}</td>
+                                <td class="city_row">
+                                    <div *ngIf="pending.city !== null">
+                                        {{ pending.city.length > 5 ? pending.city.slice(0, 10) + '...' : pending.city }}
+                                    </div>
+                                    <div *ngIf="pending.city === null || pending.city === '' ">
+                                        Not specified
+                                    </div>
+                                </td>
+                                <td>{{pending.vehicle_type}}</td>
+                                <td>{{pending.email}}</td>
+                                <td>{{pending.phone_no}}</td>
+                                <td>{{pending.created_at  | date:'short':'UTC'}}</td>
+                                <td>{{pending.balance}}</td>
+                                <td>
+                                    <div *ngIf="pending.driver_status == 1">
+                                        <span>
+                                            Approved
+                                        </span>
+                                    </div>
+                                    <div *ngIf="pending.driver_status == 0">
+                                        <span>
+                                            UnApproved
+                                        </span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <div *ngIf="pending.current_status !== '0' ">
+                                        <span>
+                                            On
+                                        </span>
+                                    </div>
+                                    <div *ngIf="pending.current_status == '0' ">
+                                        <span>
+                                            Off
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{pending.last_tripDate  | date:'short':'UTC'}}
+                                    <div *ngIf="pending.last_tripDate == null">
+                                        not recorded
+                                    </div>
+                                </td>
+                                <td class="action">
+                                    <span class="edit">
+                                        <div class="flex align-items-center justify-content-center gap-2">
+                                           <a routerLink="/drivers/{{pending.id}}/edit">
+                                            <button pButton pRipple type="button" icon="fa-solid fa-pencil" class="p-button-rounded p-button-text"></button>
+                                           </a>
+                                        </div>
+                                    </span>
+                                </td>
+                                <!-- <td>
+                                    <div class="d-flex justify-content-center ">
+                                         <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary"></p-checkbox>
+                                    </div>  
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center ">
+                                         <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary"></p-checkbox>
+                                    </div>  
+                                </td> -->
+                            </tr>
+                        </ng-template>
+                        
+                            <ng-template pTemplate="paginatorleft">
+                                <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+                            <ng-template pTemplate="paginatorright">
+                                <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+                        </p-table>  
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+       
+    <div class="footer"></div>
+</div>

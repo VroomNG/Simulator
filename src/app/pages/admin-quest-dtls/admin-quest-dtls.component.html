@@ -1,0 +1,143 @@
+<app-vr-alert *ngIf="showAlert" [color]="alertColor">
+    {{ alertMsg }}
+</app-vr-alert>
+<div class="main-container">
+    <div class="header">
+        <div class="add-admin-form">
+           <div class="card">
+            <div class="card-title">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                    <div style="width: 10%;">
+                      <img src={{quest.icon}} width="80px" style="border-radius: 20px;"/>
+                    </div>
+                    <div style="width: 50%; display: flex; justify-content: center; flex-direction: column;">
+                        <h6>Quest Details & Edit </h6>
+                    </div>
+                    <div style="width: 40%; display:flex; justify-content: end;">
+                       <button (click)="enableEdit()" class="button">
+                            Enable edit
+                       </button>
+                    </div>
+                </div>
+
+            </div>
+        <app-loader *ngIf="!quest"></app-loader>
+        <div class="card-body"*ngIf="quest" >       
+            <form> 
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label>Quest Title*</label>
+                            </div>
+                            <div>
+                                <input type="text" label="title" [(ngModel)]="quest.title" name="title" 
+                                class="form-control form-control-alternative" placeholder="Quest Title" value="{{quest.title}}" [readOnly]="isReadOnly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label>Subtitle*</label>
+                            </div>
+                            <div>
+                                <input type="text" label="subtitle" [(ngModel)]="quest.subTitle" name="subtitle" class="form-control form-control-alternative" placeholder="Subtitle" value="{{quest.subtitle}}" [readOnly]="isReadOnly">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label>Description*</label>
+                            </div>
+                            <div>
+                                <input type="text" label="desc" name="descriotion" class="form-control form-control-alternative" placeholder="Point" value="{{quest.description}}" [readOnly]="isReadOnly">
+                            </div>
+                        
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label>Point*</label>
+                            </div>
+                            <div>
+                                <input type="text" label="point" name="point" class="form-control form-control-alternative" placeholder="Point" value="{{quest.points}}" [readOnly]="isReadOnly">
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label>Start Date*</label>
+                            </div>
+                            <div>
+                                <input type="text" label="start date" name="start-date" class="form-control form-control-alternative" placeholder="Start Date" value="{{quest.starts}}" [readOnly]="isReadOnly">
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="city">End Date*</label>
+                            </div>
+                            <div>
+                                <input type="text" label="expires"  [(ngModel)]="quest.expires" name="city" class="form-control form-control-alternative" placeholder="End Date" value="{{quest.expires}}" [readOnly]="isReadOnly">
+                            </div>
+                            <!-- <p-dropdown formControlName="city" [options]="cities" optionLabel="name" class="dropdown"></p-dropdown> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label htmlFor="city">Quest Type*</label>
+                            </div>
+                            <div>
+                                <input type="text" label="quest type" class="form-control form-control-alternative" placeholder="Quest Type" [value]="quest.type === '1' ? 'Badge' : (quest.type === '2' ? 'Coin' : null)" [readOnly]="isReadOnly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-input">
+                        <div class="form-group">
+                            <div>
+                                <label>Target*</label>
+                            </div>
+                            <div>
+                                <input type="text" label="target" [(ngModel)]="quest.target" name="target" class="form-control form-control-alternative" placeholder="Target" value="{{quest.target}}" [readOnly]="isReadOnly">
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div>
+                    <p>Locations Attached to this Quest</p>
+                    <div *ngFor="let item of questLocation">
+                      <ul style="display: block;">
+                        <a><li>{{item.location}}  <span class="square-meters"> Radius:({{item.radius}}km)</span> <span class="points"> Points:({{item.points}}km)</span> </li></a>
+                      </ul>
+                    </div>
+                </div>
+                <!-- <div class="btn"> -->
+                    <button type="submit" label="submit"  class="button-del btn-primary " (click)="updateAdmin()">
+                     Update 
+                    </button>
+                    <button type="submit" label="submit" class="button-del  btn-danger" (click)="deleteQuest()">
+                       delete
+                    </button>
+                <!-- </div> -->
+              </form>
+            </div>
+           </div>
+        </div>
+    </div>
+    <div class="footer"></div>
+
+</div>

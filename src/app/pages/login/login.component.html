@@ -1,0 +1,48 @@
+<app-alert *ngIf="showAlert" [color]="alertColor">
+    {{ alertMsg }}
+  </app-alert>
+<div class="container">
+  <h1 class="h1 text-brand900">Ride Simulator</h1>
+  <p>Log in as a driver to simulate a ride experience </p>
+  <div class=" mt-4">
+   <form role="form" #loginForm="ngForm" (ngSubmit)="login()">
+     <div class="form-group mb-3">
+       <label>Email Address</label>
+       <div>
+         <input class="form-controls" #email="ngModel"
+           type="email" name="email" [(ngModel)]="credentials.email_or_phone"
+           placeholder="example@gmail.com" 
+           required pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" />
+       </div>
+       <p *ngIf="email.errors && email.touched && email.dirty" class="form-error">
+         Email is invalid
+       </p>
+     </div>
+     <div class="form-group position-relative">
+       <label>Password</label>
+       <div class="password-input">
+        <input class="form-controls" #password="ngModel" 
+          [type]="hidePassword ? 'password' : 'text'" name="password" [(ngModel)]="credentials.password"
+          placeholder="Password" required pattern="^[a-zA-Z0-9]*$"/>
+        <span class="eye-icon" (click)="hidePassword = !hidePassword">
+          <i class="fa-solid text-[#CBD5E1]" [ngClass]="hidePassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+        </span>
+      </div>
+       <p *ngIf="password.errors && password.touched && password.dirty " class="form-error">
+         Password must have at least a letter and a number
+       </p>
+     </div>
+     
+     <div class="text-center mt--2">
+       <button type="submit" class="btn w-[100%] rounded-[50px] p-3 btn-primary my-4"
+       [disabled]="loginForm.invalid || inSubmission">
+        Continue
+       </button>
+     </div>
+   </form>
+   <a [routerLink]="['/forgot-password']" >
+   <p>Forgot Password?</p>
+   </a>
+ </div>
+ </div>
+ 

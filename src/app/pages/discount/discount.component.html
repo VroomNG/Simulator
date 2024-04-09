@@ -1,0 +1,39 @@
+<app-loader *ngIf="showLoader"></app-loader>
+                    <p-table *ngIf="!showLoader"
+                        [value]="discount"
+                        [paginator]="true"
+                        [rows]="10"
+                        [showCurrentPageReport]="false"
+                        [tableStyle]="{ 'min-width': '60rem' }"
+                        currentPageReportTemplate=""
+                        [rowsPerPageOptions]="[10, 25, 50]"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ;">
+                                <th style="width:2%"> CODE </th>
+                                <th style="width:5%">TITLE </th>
+                                <th style="width:10%">DESCRIPTION </th>
+                                <th style="width:5%">START DATE</th>
+                                <th style="width:5%">END DATE</th>
+                                <!-- <th style="width:5%">DATE</th>			
+                                <th style="width:5%">HAPPENED WITHIN </th>			 -->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-discount>
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ">
+                               <td>{{discount.discount_code}}</td>
+                               <td>{{discount.title}}</td>
+                               <td>{{discount.description}}</td>
+                               <td>{{discount.start_date}}</td>
+                               <td>{{discount.end_date}}</td>
+                               <!-- <td>{{discount.discount_percent}}</td> -->
+                               
+                            </tr>
+                        </ng-template>                       
+                            <ng-template pTemplate="paginatorleft">
+                                <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+                            <ng-template pTemplate="paginatorright">
+                                <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+</p-table>  

@@ -1,0 +1,3 @@
+<select (change)="onOptionSelect($event)" [(ngModel)]="ngModel" formControlName="control">
+    <option *ngFor="let option of options" [value]="option">{{ option.name }}</option>
+</select>

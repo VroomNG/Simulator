@@ -1,0 +1,13 @@
+.parent:hover .nav-title {
+    color: #57534E;
+    font-weight: 700;
+  }
+
+  .indicator {
+    transition: background-color 0.3s ease-in-out;
+    background-color: transparent;
+}
+
+.indicator.active {
+    background-color: #28094F; /* Change to your desired color */
+}

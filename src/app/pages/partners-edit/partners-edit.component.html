@@ -1,0 +1,122 @@
+<app-vr-alert *ngIf="showAlert" [color]="alertColor">
+    {{ alertMsg }}
+</app-vr-alert>
+<app-loader *ngIf="!partners"></app-loader>
+<div *ngIf="partners">
+    <p-dialog [(visible)]="displayDialog" [modal]="true" [responsive]="true" [closable]="false"  class="absolute rounded-full">
+        <div class="w-[80vh] h-[65vh] flex items-start justify-center ">
+            <div class="h-[100%] w-[95%]">
+                <div class="h-[10%] flex items-center justify-between w-full"> 
+                    <h3 class="h3 text-[#28094F]">Edit Partner</h3>
+                    <button (click)="close()">
+                        <i class="fa fa-times text-[20px]" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="h-[80%] w-full overflow-y-scroll flex  items-start"> 
+                    <div class="card-body">   
+                        <form>
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Organisation Name:</label>
+                                        <input type="text" id="input-firstname" [(ngModel)]="partners.firstname" name="firstname" class="form-control form-control-alternative" placeholder="First name" value="{{partners.firstname}}">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Contact Person:</label>
+                                        <input type="text" id="input-lastname" [(ngModel)]="partners.lastname" name="lastname" class="form-control form-control-alternative" placeholder="Last name" value="{{partners.lastname}}">
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label htmlFor="email">Email Address:</label>
+                                        <input type="text" id="email" [(ngModel)]="partners.email" name="email" class="form-control form-control-alternative" placeholder="Email" value="{{partners.email}}" readonly="true">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label htmlFor="phone">Phone Number:</label>
+                                        <input type="text" id="phone" [(ngModel)]="partners.Phone_no" name="phone_no" class="form-control form-control-alternative" placeholder="PhoneNuber" value="{{partners.Phone_no}}">
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                            <label htmlFor="password">Password:</label>
+                                            <input type="text" id="input-password" [(ngModel)]="partners.password" name="password" class="form-control form-control-alternative" placeholder="*******" value="{{partners.password}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                            <label htmlFor="city">City:</label>
+                                            <input type="text" id="input-city" [(ngModel)]="partners.city" name="city" class="form-control form-control-alternative" placeholder="city" value="{{partners.city}}">  
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="h4 text-[#28094F]">Bank Details</h4>
+                            </div>
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <label>Account Holder Name:</label>
+                                    <input type="text" id="input-holder-name" [(ngModel)]="partners.holder_name" name="holder_name" class="form-control form-control-alternative" placeholder="Holder Name" value="{{partners.holder_name}}">
+                                </div>
+                                <div class="w-[49%]">
+                                    <label>Account Number:</label>
+                                    <input type="text" id="input-account-number" [(ngModel)]="partners.account_number" name="account number" class="form-control form-control-alternative" placeholder="Account Number" value="{{partners.account_name}}">
+                                </div>
+                            </div>
+                        
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Name of Bank:</label>
+                                        <input type="text" id="input-name-of-bank" [(ngModel)]="partners.bank_name" name="bank name" class="form-control form-control-alternative" placeholder="Bank Name" value="{{partners.bank_name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bank Location:</label>
+                                        <input type="text" id="input-location" [(ngModel)]="partners.location" name="supervisor" class="form-control form-control-alternative" placeholder="Supervisor" value="{{partners.location}}">
+                                    </div>
+                                </div>
+                        
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Payment Email:</label>
+                                        <input type="text" id="payment_email" [(ngModel)]="partners.payment_email" name="supervisor" class="form-control form-control-alternative" placeholder="Supervisor" value="{{partners.payment_email}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bank Sort Code:</label>
+                                        <input type="text" id="input-payment_wmail" [(ngModel)]="partners.IFSC_code" name="supervisor" class="form-control form-control-alternative" placeholder="Supervisor" value="{{partners.IFSC_code}}">
+                                    </div>
+                                </div>
+                            </div>
+    
+                           
+                        
+                           
+                        </form>
+                </div>            
+                </div>
+                <div class="h-[10%] w-full flex justify-between">
+                    <div class="btn w-[48%]">
+                        <app-button buttonText="Delete" borderColor="#f01717" bgColor="#f01717" textColor="#FFFFFF" (click)="deletePartner()"
+    
+                        ></app-button>
+                    </div>
+                    <div class="btn w-[48%]">      
+                        <app-button buttonText="Update Partner" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="update()"
+                        
+                        ></app-button>            
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </p-dialog>
+    </div>

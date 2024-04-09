@@ -1,0 +1,48 @@
+<app-loader *ngIf="showLoader"></app-loader>
+                    <p-table *ngIf="!showLoader"
+                        [value]="view_schedule"
+                        [paginator]="true"
+                        [rows]="10"
+                        [showCurrentPageReport]="false"
+                        [tableStyle]="{ 'min-width': '60rem' }"
+                        currentPageReportTemplate=""
+                        [rowsPerPageOptions]="[10, 25, 50]"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ;">
+                                <th style="width:2%"> ID </th>
+                                <th style="width:5%">TITLE </th>
+                                <th style="width:15%">DESCRIPTION</th>
+                                <th style="width:5%">SCHEDULE DATE</th>
+                                <th style="width:5%">TARGET </th>			
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-view_schedule>
+                            <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ">
+                                <td>{{ view_schedule.id }}</td>
+                                <td>{{ view_schedule.title }}</td>
+                                <td>{{ view_schedule.description }}</td>
+                                <td>{{ view_schedule.sendDate}}</td>
+                                <td>
+                                    <div *ngIf="view_schedule.drivers">
+                                         Approved Drivers
+                                    </div>
+                                    <div *ngIf="view_schedule.riders">
+                                         Riders
+                                    </div>
+                                    <div *ngIf="view_schedule.udrivers">
+                                         Unaprroved Drivers
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                        </ng-template>
+                        
+                            <ng-template pTemplate="paginatorleft">
+                                <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+                            <ng-template pTemplate="paginatorright">
+                                <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
+                            </ng-template>
+        </p-table>  

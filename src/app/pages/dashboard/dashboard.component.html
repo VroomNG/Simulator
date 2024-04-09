@@ -1,0 +1,174 @@
+<app-loader *ngIf="loading"></app-loader>
+<app-vr-alert  [color]="alertColor" *ngIf="alert" >
+   {{ alertMsg }}
+</app-vr-alert>
+
+<div class="w-full h-full flex justify-center" *ngIf="rideId">
+   <div class=" w-[60%] h-[20%] pt-4">
+      <form (ngSubmit)="getOpenTrip()" #rideForm="ngForm">
+         <div class="form-group mb-3">
+            <label>Enter Trip ID</label>
+            <div>
+              <input class="form-controls" #trip_id="ngModel"
+                type="email" name="email" [(ngModel)]="credentials.trip_id"
+                placeholder="Enter Trip ID" />
+            </div>
+           
+          </div>
+         <button type="submit" class="btn btn-primary">Get trip</button>
+       </form>
+       <div></div>
+   </div>
+  
+</div>
+
+
+<div class=" w-full h-full flex items-center justify-center " *ngIf="open_trips">
+  <div *ngIf="open_trips" class="bg-[#F9FAFB]  flex flex-col items-center justify-center h-[95%] w-[95%] rounded-md ">
+   <div class="bg-white overflow-y-scroll h-[90%] w-[95%] flex flex-col justify-center items-center rounded-md ">
+      <div class=" h-[90%] w-[95%]  " >
+         <div class="h-[10%] border-b border-width-2 border-slate-600 mt-2 ">
+            <h2 class="h2"> Ride Details </h2>
+         </div>
+         <div class="h-[50%] w-full">
+           <div class="trip details flex mt-2">
+              <div class="w-[80%]">
+               <h4 class="h5 mt-2">Ride ID: {{open_trips?.trip.id}} </h4>
+              </div>
+              <div class="w-[25%] px-2">
+               <span  *ngIf="acceptTrip">
+                  <app-button buttonText="Accept ride" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="acceptTripFunction(open_trips?.trip.id)"></app-button>  
+               </span>
+               <span *ngIf="startTrip">
+                  <app-button buttonText="Start Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="startTripFunction(open_trips?.trip.id)"></app-button>  
+               </span>
+
+               <span *ngIf="completeTrip">
+                  <app-button  buttonText="Complete Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="tripCompleteFunction(open_trips?.trip.id)"></app-button>  
+               </span>
+               
+               <span *ngIf="cancelTrip">
+                  <app-button  buttonText="Cancel Trip" borderColor="#28094F" bgColor="red" textColor="#FFFFFF" (click)="cancelTripFunction(open_trips?.trip.id)"></app-button>  
+               </span>
+
+               <span *ngIf="rateTrip">
+                  <h5>How was your trip? give feed back:</h5>
+                  <app-button  buttonText="Rate Trip" borderColor="#28094F" bgColor="#D97706" textColor="#FFFFFF" (click)="rateTripFunction(open_trips?.trip.id)"></app-button>  
+               </span>
+               
+               
+           </div>
+           </div>
+
+           <div class="location">
+            <h5>Rider location</h5>
+            <div class="mt-2 text-[#667085] ">
+             <p>{{open_trips?.trip.from_address}} </p>
+           
+            </div>
+           </div>
+
+           <div class="destination  mt-2">
+            <h5>Rider Destination</h5>
+            <div class="mt-2 text-[#667085]">
+               <p>{{open_trips?.trip.to_address}} </p>
+            </div>
+           </div>
+
+          <div class="estimated_time text-[#12B76A] mt-2">
+            <!-- <p>Estimated arrival time: 03: 41pm May 16, 2022</p> -->
+            <p>Distance: {{open_trips?.trip.distance}} KM</p>
+            <p>Time booked: 03: {{open_trips?.trip.created_at | date:'short':'UTC' }}</p>
+          </div>
+           
+         </div>
+         <div class="h-[20%]  w-full">
+            <span class="flex" *ngIf="loadingState">
+               <!-- Step 1 -->
+               <div class="w-[20%]" [ngClass]="{'text-[#D97706]': step1Active, 'text-[#D0D5DD]': !step1Active}">
+                 <div class="flex flex-col items-center">
+                   <h5>Trip Accepted</h5>
+                 </div>
+                 <div class="py-3 flex flex-col justify-center items-center">
+                   <div class="bg-[#D97706] rounded-full h-2 w-2 absolute  -mt-[1px]" *ngIf="step1Active"></div>
+                   <div class="bg-[#D0D5DD] rounded-full h-2 w-2 absolute -mt-[1px]" *ngIf="!step1Active"></div>
+                   <div class="bg-[#D97706] w-full h-[1px]" *ngIf="step1Active"></div>
+                   <div class="bg-[#D0D5DD] w-full h-[1px]" *ngIf="!step1Active"></div>
+                 </div>
+                 <div class="flex flex-col items-center">
+                   <p>Time: 11:42pm</p>
+                 </div>
+               </div>
+             
+               <!-- Step 2 -->
+               <div class="w-[20%]" [ngClass]="{'text-[#D97706]': step2Active, 'text-[#D0D5DD]': !step2Active}">
+                 <div class="flex flex-col items-center">
+                   <h5>Trip Started</h5>
+                 </div>
+                 <div class="py-3 flex flex-col justify-center items-center">
+                   <div class="bg-[#D97706] rounded-full h-2 w-2 absolute  -mt-[1px]" *ngIf="step2Active"></div>
+                   <div class="bg-[#D0D5DD] rounded-full h-2 w-2 absolute -mt-[1px]" *ngIf="!step2Active"></div>
+                   <div class="bg-[#D97706] w-full h-[1px]" *ngIf="step2Active"></div>
+                   <div class="bg-[#D0D5DD] w-full h-[1px]" *ngIf="!step2Active"></div>
+                 </div>
+                 <div class="flex flex-col items-center">
+                   <p>Time: 11:42pm</p>
+                 </div>
+               </div>
+             
+               <!-- Step 3 -->
+               <div class="w-[20%]" [ngClass]="{'text-[#D97706]': step3Active, 'text-[#D0D5DD]': !step3Active}">
+                 <div class="flex flex-col items-center">
+                   <h5>Trip complete</h5>
+                 </div>
+                 <div class="py-3 flex flex-col justify-center items-center">
+                   <div class="bg-[#D97706] rounded-full h-2 w-2 absolute  -mt-[1px]" *ngIf="step3Active"></div>
+                   <div class="bg-[#D0D5DD] rounded-full h-2 w-2 absolute -mt-[1px]" *ngIf="!step3Active"></div>
+                   <div class="bg-[#D97706] w-full h-[1px]" *ngIf="step3Active"></div>
+                   <div class="bg-[#D0D5DD] w-full h-[1px]" *ngIf="!step3Active"></div>
+                 </div>
+                 <div class="flex flex-col items-center">
+                   <p>Time: 11:42pm</p>
+                 </div>
+               </div>
+             
+               <!-- Step 4 -->
+               <div class="w-[20%]" [ngClass]="{'text-[#D97706]': step4Active, 'text-[#D0D5DD]': !step4Active}">
+                 <div class="flex flex-col items-center">
+                   <h5>Trip canceled</h5>
+                 </div>
+                 <div class="py-3 flex flex-col justify-center items-center">
+                   <div class="bg-[#D97706] rounded-full h-2 w-2 absolute  -mt-[1px]" *ngIf="step4Active"></div>
+                   <div class="bg-[#D0D5DD] rounded-full h-2 w-2 absolute -mt-[1px]" *ngIf="!step4Active"></div>
+                   <div class="bg-[#D97706] w-full h-[1px]" *ngIf="step4Active"></div>
+                   <div class="bg-[#D0D5DD] w-full h-[1px]" *ngIf="!step4Active"></div>
+                 </div>
+                 <div class="flex flex-col items-center">
+                   <p>Time: 11:42pm</p>
+                 </div>
+               </div>
+             
+               <!-- Step 5 -->
+               <div class="w-[20%]" [ngClass]="{'text-[#D97706]': step5Active, 'text-[#D0D5DD]': !step5Active}">
+                 <div class="flex flex-col items-center">
+                   <h5>Trip Rated</h5>
+                 </div>
+                 <div class="py-3 flex flex-col justify-center items-center">
+                   <div class="bg-[#D97706] rounded-full h-2 w-2 absolute  -mt-[1px]" *ngIf="step5Active"></div>
+                   <div class="bg-[#D0D5DD] rounded-full h-2 w-2 absolute -mt-[1px]" *ngIf="!step5Active"></div>
+                   <div class="bg-[#D97706] w-full h-[1px]" *ngIf="step5Active"></div>
+                   <div class="bg-[#D0D5DD] w-full h-[1px]" *ngIf="!step5Active"></div>
+                 </div>
+                 <div class="flex flex-col items-center">
+                   <p>Time: 11:42pm</p>
+                 </div>
+               </div>
+             </span>
+             
+             
+         </div>
+      </div>
+   </div>
+  </div>
+ 
+</div>

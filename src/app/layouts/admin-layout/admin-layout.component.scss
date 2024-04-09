@@ -1,0 +1,267 @@
+.sidebar {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 3px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--default);
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    background-color: white;
+}
+.dashboard {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.btn {
+    border-radius: 30px;
+    padding: 0;
+}
+
+
+
+.container {
+    width: 95%;
+    height: 100%;
+}
+
+.icon i {
+    font-size: 16px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.flex .icon {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.flex .text {
+    width: 85%;
+    display: flex;
+    align-items: center;
+}
+
+
+.cont p {
+    font-size: 14px;
+    color: #000000;
+}
+h1 {
+    font-size: 12px;
+}
+.my-profile:hover {
+    background-color: rgb(216, 216, 216);
+    cursor: pointer;
+}
+.logout:hover {
+    background-color: rgb(216, 216, 216);
+    cursor: pointer;
+}
+.change-p:hover {
+    background-color: rgb(216, 216, 216);
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+
+.main-container{
+    height: 100%;
+    width: 100%;
+}
+a {
+    text-decoration: none;
+}
+.carret i {
+    color: #adb5bd;
+    font-size: 12px;
+}
+.carret-icon i {
+    color: #adb5bd;
+    font-size: 12px;
+    margin-bottom: 20px;
+    
+}
+.carret-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 10px;
+}
+.circle_img{
+    border-radius: 50%;
+    width: 100%;
+    height: 36.5px;
+}
+.container {
+    width: 95%;
+    // background-color: rgb(53, 255, 53);
+    display: flex;
+    align-items: center;
+}
+
+.navbar{
+    z-index: 9999;
+    // background-color: red;
+}
+
+.logo {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+.navbar-area {
+    height: 90%;
+    width: 100%;
+    // background-color: pink;
+}
+
+.dashboard-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+    // background-color: yellow;
+}
+.icon {
+    width: 20%;
+    // padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon i {
+    font-size: 14px;
+    // color: #5603ad;  
+}
+.navlink {
+    // d-flex flex-row align-items-center" style="width: 80%;"
+    width: 80%;
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    // padding: 12px;
+    margin-top: 10px;
+}
+.navlink p {
+    font-size: 14px;
+    color: black;
+    font-weight: 200;
+}
+
+.nav-container {
+    display: flex;
+}
+
+.title {
+    margin-top: 4px;
+    height: 100%;
+    width: 90%;
+}
+.carret {
+    height: 100%;
+    width: 10%;
+}
+.carret-icon {
+    background-color: transparent;
+    border-color: transparent;
+    // padding: 1px;
+}
+
+.car-down {
+    visibility: hidden;
+    position: absolute;
+}
+.car-up {
+    visibility: hidden;
+    position: absolute;
+}
+.dropdown {
+    background-color: rgb(247, 239, 239);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.d-container {
+    width: 85%;
+}
+
+.child-title {
+    margin: 5px 20px;
+}
+.children {
+    padding: 15px 5px;
+    font-size: 14px;
+    font-weight: 450;
+}
+
+@media (min-width: 768px){
+    .navbar-expand-md .navbar-nav.sidemenustart .dropdown-menu {
+        position: relative;
+    }
+    }
+    .navbar-nav.sidemenustart .dropdown-menu {
+        border-radius:0 ;
+    }
+    .dropdown-toggle::after {
+    display: none;;
+    }
+    
+    .navbar-nav.sidemenustart .dropdown > a::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+        border-top: 0.3em solid;
+        border-right: 0.3em solid transparent;
+        border-bottom: 0;
+        border-left: 0.3em solid transparent;
+        right: 10px;
+        position: absolute;
+    }
+    .navbar-nav.sidemenustart .dropdown.show > a::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+        border-bottom: 0.3em solid;
+        border-right: 0.3em solid transparent;
+        border-top: 0;
+        border-left: 0.3em solid transparent;
+        right: 10px;
+        position: absolute;
+    }
+
+
+    @media screen and (max-width:640px) {
+        .user-name p {
+            font-size: 10px;
+            // color: red;
+        }
+    }

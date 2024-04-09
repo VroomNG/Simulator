@@ -1,0 +1,25 @@
+
+<div class="w-full h-full bg-[#FAFAF9] border-r-2 border-[#EEECF6]">
+   <div class="logo h-[10%] w-full p-2 px-4 flex items-center">
+       <a [hidden]="false" [routerLink]="['/']">
+           <img src="./assets/img/brand/Logo.png" class="navbar-brand-img" alt="..." style="width: 130px;">
+       </a>
+   </div>
+   <div *ngFor="let routeInfo of ROUTES; let i = index">
+      <div class="parent flex  my-3" >
+            <div class="w-[2%] indicator" [ngClass]="{'active': isActive(routeInfo.path)}"></div>
+            <div class="w-[98%]">
+               <a [hidden]="false" [routerLink]="routeInfo.path ">
+                  <div class="w-full flex items-center px-4 h-[60px]">
+                     <p class="nav-title text-black10 ">{{ routeInfo.title }}</p>
+                  </div>
+               </a>  
+            </div>
+         </div>
+   </div>
+   <div class="p-4 cursor-pointer h-[80%] flex items-end pb-4"  (click)="onLogOut()">Log out <span class="w-[30%]">
+      <i class="fa-solid fa-arrow-right-from-bracket mx-2"></i>
+    </span>
+   </div>
+   
+</div>

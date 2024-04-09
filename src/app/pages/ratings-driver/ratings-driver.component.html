@@ -1,0 +1,250 @@
+
+<div class="w-full h-full">
+    <p-dialog [(visible)]="displayDialog" [modal]="true" [responsive]="true" [closable]="false"  class="absolute">
+         <div class="w-[80vh] h-[60vh] flex items-start justify-center ">
+             <div class="h-[95%] w-[95%]">
+                 <div class="h-[10%] flex items-center w-full"> 
+                   <h3 class="h3 text-[#28094F]">Rating Details</h3>
+                 </div>
+                 <div class="h-[80%] w-full flex  items-start">
+                     <div class="h-[50%] pt-4 w-full flex flex-wrap">
+                         <div class="w-[50%]"  >
+                             <h5>Trip No:</h5>
+                             <p> VRM {{ editedAdmin1?.trip_id}} </p>
+                         </div>
+                         <div class="w-[50%]">
+                             <h5>Drives Name</h5>
+                             <p *ngIf="editedAdmin1?.driverName">
+                                {{ editedAdmin1.driverName }}
+                             </p> 
+                              <p *ngIf="editedAdmin1?.driverName === null">
+                                 No name
+                              </p> 
+                              <p *ngIf="editedAdmin1?.driverName === '' ">
+                                 No name
+                              </p> 
+                         </div>
+                         <div class="w-[50%]">
+                             <h5>Riders Name</h5>
+                             <p *ngIf="editedAdmin1?.riderName">
+                                {{ editedAdmin1?.riderName }}
+                             </p> 
+                              <p *ngIf="editedAdmin1?.riderName === null">
+                                 No name
+                              </p> 
+                              <p *ngIf="editedAdmin1?.riderName === '' ">
+                                 No name
+                              </p> 
+                         </div>
+                         <div class="w-[50%]">
+                             <h5>Ratings</h5>
+                             <p *ngIf="editedAdmin1?.rating == 1 ">
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                             </p>
+                             <p *ngIf="editedAdmin1?.rating == 2 ">
+                               
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                             </p>
+                             <p *ngIf="editedAdmin1?.rating == 3 ">
+                              
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                             </p>
+                             <p *ngIf="editedAdmin1?.rating == 4 ">
+                                
+                                    <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow text-[10px]"></i> 
+                             </p>
+                             <p *ngIf="editedAdmin1?.rating == 5 ">
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                             </p>
+                             
+                         </div>
+                         <div class="w-[50%]">
+                             <h5>Comments</h5>
+                             <p *ngIf="editedAdmin1?.comments">
+                                "{{ editedAdmin1.comments }}"
+                            </p>
+                            <p *ngIf="editedAdmin1?.comments === null">
+                                "No comments"
+                            </p>
+                            <p *ngIf="editedAdmin1?.comments === '' ">
+                                "No comments"
+                            </p>
+                         </div>
+                         <div class="w-[50%]">
+                             <h5>Phone</h5>
+                             <p>{{ editedAdmin1?.phone_no }}</p>
+                           
+                         </div>
+                         <div class="w-[50%]">
+                             <h5>Review Date</h5>
+                             <p>{{ editedAdmin1?.updated_at  | date:'short':'UTC' }}</p>
+                           
+                         </div>
+                     </div>
+                 </div>
+                 <div class="h-[10%] w-full flex justify-between">
+                    <div class="btn w-[48%]">
+                        <app-button buttonText="Cancel" borderColor="#F1F2F4" bgColor="transparent" (click)="toggleDialog()"></app-button>
+                    </div>
+                    <div class="btn w-[48%]">
+                       <app-button buttonText="Delete" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="deleteDriver(editedAdmin1)"></app-button>
+                 </div>
+                 </div>
+               </div>  
+         </div>                                 
+     </p-dialog>
+
+ <div>
+     <div >
+         <div>
+             <app-loader *ngIf="showLoader"></app-loader>
+             <div *ngIf="showNoResults === true && !showLoader" class="w-full h-[80vh] flex items-center justify-center">
+                 <h1 class="font-bold text-3xl text-gray-200">No Match Found</h1>
+             </div>
+                 <p-table *ngIf="!showLoader && !showNoResults" 
+                         [value]="drivers"
+                         [paginator]="true"
+                         [rows]="10"
+                         [showCurrentPageReport]="false"
+                         [tableStyle]="{ 'min-width': '100%' }"
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         [rowsPerPageOptions]=""
+                     >
+                         <ng-template pTemplate="header">
+                             <tr style="height: 3rem; border-color: #FAFAF9; border-top-width: 0.2px; border-bottom-width:0.2px ;">
+                                <th class="w-[5%] capitalize">Trip No</th>
+                                <th class="w-[5%] capitalize">Driver</th>
+                                <th class="w-[5%] capitalize">Rider</th>
+                                <th class="w-[5%] capitalize">Rating</th>
+                                <th class="w-[5%] capitalize">Comments</th>
+                                <th class="w-[5%] capitalize">Phone</th>
+                                <th class="w-[5%] capitalize">Review Date</th>
+                                <th class="w-[5%] capitalize">Action</th>
+                                
+                             </tr>
+                         </ng-template>
+                         <ng-template pTemplate="body" let-drivers>
+                             <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ">
+                                <td>VRM{{ drivers.trip_id}}</td>
+                                <td>
+                                    <div *ngIf="drivers.driverName">
+                                      {{ drivers.driverName }}
+                                    </div> 
+                                    <div *ngIf="drivers.driverName === null">
+                                       No name
+                                    </div> 
+                                    <div *ngIf="drivers.driverName === '' ">
+                                       No name
+                                    </div> 
+                                 </td>
+                               
+                                <td>
+                                   <div *ngIf="drivers.riderName">
+                                     {{ drivers.riderName }}
+                                   </div> 
+                                   <div *ngIf="drivers.riderName === null">
+                                      No name
+                                   </div> 
+                                   <div *ngIf="drivers.riderName === '' ">
+                                      No name
+                                   </div> 
+                                </td>
+                                <td>
+                                   <p *ngIf="drivers.rating == 1 ">
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                             </p>
+                             <p *ngIf="drivers.rating == 2 ">
+                               
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                             </p>
+                             <p *ngIf="drivers.rating == 3 ">
+                              
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                             </p>
+                             <p *ngIf="drivers.rating == 4 ">
+                                
+                                    <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                    <i class="fa-solid fa-star text-yellow text-[10px]"></i> 
+                             </p>
+                             <p *ngIf="drivers.rating == 5 ">
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                                <i class="fa-solid fa-star text-yellow text-[10px]"></i>
+                             </p>
+                             
+                                </td>
+                               
+                                <td>
+                                    <div *ngIf="drivers.comments">
+                                        "{{ drivers.comments }}"
+                                    </div>
+                                    <div *ngIf="drivers.comments === null">
+                                        "No comments"
+                                    </div>
+                                    <div *ngIf="drivers.comments === '' ">
+                                        "No comments"
+                                    </div>
+                                    
+                                </td>
+                                <td>{{ drivers.phone_no }}</td>
+                                <td>{{ drivers.updated_at  | date:'short':'UTC' }}</td>
+                                 <td class="action flex justify-between">
+                                     <span class="edit">
+                                         <div class="flex align-items-center justify-content-center gap-2">
+                                            <span (click)="userAction(drivers.id)">
+                                             <button pButton pRipple type="button" icon="fa-solid fa-ellipsis-vertical" class="p-button-rounded p-button-text"></button>
+                                            </span>
+                                         </div>
+                                     </span>
+                                 </td> 
+                             </tr>
+                             <div class="z-[9999] card  w-36 h-36 ml-[60rem] bg-white drop-shadow-xl absolute" *ngIf="selectedUserId === drivers.id">
+                                 <div class="h-[33%] bg-[#FAFAF9] rounded-t-md flex items-center justify-center red-400">
+                                     <p class="font-medium">More Actions</p>
+                                 </div>
+                                 <div class="h-[32%] flex items-center border-y-[0.5px] border-[#EEECF6] justify-center ">
+                                     <span class="text-brand900 cursor-pointer hover:font-bold" (click)="editAdmin(drivers)" >
+                                         <span class="hover:font-medium">View Rating</span> 
+                                     </span>
+                                 </div>
+                                 <div class="h-[32%] flex items-center justify-center">
+                                     <!-- <a routerLink="/users/{{drivers.id}}/edit" >
+                                        <span class="hover:font-medium">Edit Admin</span> 
+                                     </a> -->
+                                     <span>
+                                        <button (click)="deleteDriver(drivers)" class="hover:text-brand900 ">
+                                            Delete <i class="fa-solid fa-trash text-red-600 mx-1"></i>
+                                        </button>
+                                        
+                                     </span>
+                                 </div>
+                             </div>
+                         </ng-template>
+                         
+                             <ng-template pTemplate="paginatorleft">
+                                 <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
+                             </ng-template>
+                             <ng-template pTemplate="paginatorright">
+                                 <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
+                             </ng-template>
+                 </p-table>  
+             </div>
+             </div>
+         </div>    
+</div>
+ 
