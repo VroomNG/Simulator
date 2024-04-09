@@ -66,31 +66,8 @@ export class AdminLayoutComponent implements OnInit {
    this.displayDialog = !this.displayDialog
   }
 
-  // logout(){
-  //     // localStorage.clear()
-  //     // this.router.navigate(['/login']) 
-      
-  //     const {token} = this.userDetails;
-  //     window.alert(token)
-
-  //     this.auth.logout(token).subscribe(
-  //       response => {
-  //       // localStorage.clear()
-  //       // this.router.navigate(['/login']) 
-  //         // Handle successful logout response if needed
-  //       },
-  //       error => {
-  //         // Handle error response if needed
-  //       }
-  //     );
-      
-      
-
-  // }
-
   async logout() {
     const {token} = this.userDetails;
-    // localStorage.clear()
     try {
        this.auth.logout(token).subscribe(
         (res: any) => {
@@ -99,16 +76,9 @@ export class AdminLayoutComponent implements OnInit {
             window.alert(res.data.message);
             localStorage.clear()
             this.router.navigate(['/login']) 
-
-          } else {
-            // window.alert(res.data.message);
-            
-
-          }
+          } else {}
         }
-
-      )
-      
+      ) 
     } catch (error) {
       console.error('Logout error:', error);
     }
