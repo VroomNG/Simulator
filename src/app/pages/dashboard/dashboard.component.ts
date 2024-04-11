@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   }
 
   open_trips:any;
-  acceptedTrip:any;
+  tripResponse:any;
   ongoingTrip:any;
   canceledTrip:any;
   tripComplete:any
@@ -102,6 +102,8 @@ export class DashboardComponent implements OnInit {
           (res:any)=>{
               console.log('accept trip res', res)
               // this.acceptTrip = !this.acceptTrip
+              this.tripResponse = res.data.trip.security_code;
+              console.log('trip response detais', this.tripResponse)
               if(res.success == true){
   
                   this.alertMsg = 'Trip Accepted'
@@ -115,10 +117,7 @@ export class DashboardComponent implements OnInit {
                 
                   this.acceptTrip = !this.acceptTrip
                   this.startTrip = !this.startTrip
-                // this.startTrip == res.success;
-                  this.acceptedTrip == res.data.trip
-                 console.log('accepted trip detais', this.acceptTrip)
-                // this.cancelTrip == true;
+                  console.log('trip response detais', this.tripResponse)
               } else {
                 alert('trip not accepted')
               }
@@ -141,7 +140,7 @@ export class DashboardComponent implements OnInit {
     this.alertColor = 'primary'
 
     const formData = {
-        security_code: 33864
+        security_code: this.tripResponse
     }
     setTimeout(() => {
       this.Dashboard.startTrip(trip_id, formData).subscribe(
