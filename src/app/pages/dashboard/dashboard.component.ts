@@ -1,6 +1,7 @@
 import { Component , OnInit} from '@angular/core';
 import { DashboardService } from 'src/app/service/dashboard.service';
-
+import { interval, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -8,12 +9,16 @@ import { DashboardService } from 'src/app/service/dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
+  fetchSubscription!: Subscription;
   rideId:boolean = true;
   loading:boolean = false;
   alert:boolean = false;
   alertMsg:string = 'loading...';
   alertColor:string = 'primary';
   loadingState:boolean = false;
+
+  tripStats:string = '0';
+  status:string = '0';
 
   credentials = {
     trip_id: 0,
@@ -81,13 +86,32 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  getTripStatus(trip_id:number){
-    //  alert(trip_id)
-     this.Dashboard.getTripStatus(trip_id).subscribe(
-      (res:any)=>{
-        console.log('trip status',res)
+  // getTripStatus(trip_id:number){
+  //   //  alert(trip_id)
+  //    this.Dashboard.getTripStatus(trip_id).subscribe(
+  //     (res:any)=>{
+  //       console.log('trip status',res)
+  //       this.tripStats = res.data.trip_status_code
+  //       console.log('trip status code,', this.tripStats)
+  //     }
+  //    )
+  // }
+  getTripStatus(trip_id: number) {
+    if (this.fetchSubscription && !this.fetchSubscription.closed) {
+      this.fetchSubscription.unsubscribe(); // Stop previous polling if it exists
+    }
+  
+    this.fetchSubscription = interval(1000).pipe(
+      
+      switchMap(() => this.Dashboard.getTripStatus(trip_id))
+    ).subscribe(
+      (res: any) => {
+        console.log('trip status', res);
+        console.log('polling...'),
+        this.tripStats = res.data.trip_status_code;
+        console.log('trip status code', this.tripStats);
       }
-     )
+    );
   }
 
   acceptTripFunction(tripId: any) {
@@ -116,7 +140,8 @@ export class DashboardComponent implements OnInit {
                   setTimeout(() => {
                     this.alert = false
                     this.getTripStatus(trip_id)
-                  }, 2000);
+                    
+                  }, 1000);
                 
                   this.acceptTrip = !this.acceptTrip
                   this.startTrip = !this.startTrip
@@ -127,12 +152,6 @@ export class DashboardComponent implements OnInit {
           }
       )
       }, 1500);
-
-     
-      // console.log('trip id', trip_id)
-      // console.log('trip token', token)
-       
-    
   }
 
   startTripFunction(tripId: number){
@@ -175,6 +194,13 @@ export class DashboardComponent implements OnInit {
   
   }
 
+  stopFetching() {
+    if (this.fetchSubscription && !this.fetchSubscription.closed) {
+      this.fetchSubscription.unsubscribe();
+      console.log('Subscription closed.');
+    }
+  }
+
   tripCompleteFunction(tripId: number){
 
     this.alert = true
@@ -204,6 +230,8 @@ export class DashboardComponent implements OnInit {
                 setTimeout(() => {
                   this.alert = false
                 }, 2000);
+                
+          
   
               this.completeTrip = !this.completeTrip
               this.cancelTrip = !this.cancelTrip
@@ -248,6 +276,8 @@ export class DashboardComponent implements OnInit {
               setTimeout(() => {
                 this.alert = false
               }, 2000);
+
+             
   
               this.completeTrip = !this.completeTrip
               this.cancelTrip = !this.cancelTrip
@@ -266,7 +296,11 @@ export class DashboardComponent implements OnInit {
   }
 
   rateTripFunction(trip_id:any){
-     location.reload()
+     
+     this.stopFetching()
+     setTimeout(() => {
+      location.reload()
+     })
   }
 
 }

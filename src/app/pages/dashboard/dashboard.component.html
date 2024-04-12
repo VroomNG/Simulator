@@ -79,6 +79,30 @@
             <p>Distance: {{open_trips?.trip.distance}} KM</p>
             <p>Time booked: 03: {{open_trips?.trip.created_at | date:'short':'UTC' }}</p>
           </div>
+
+          <div class="estimated_time text-green-900 flex text-[10px] mt-2 py-2">
+            <span>Trip status:</span>
+            <div *ngIf="!tripStats">
+              Scheduled
+              <p>{{tripStats}}</p>
+            </div>
+            <div *ngIf="tripStats === '1'">
+              Accepted
+              {{tripStats}}
+            </div>
+            <div *ngIf="tripStats === '2'">
+              Completed
+              {{tripStats}}
+            </div>
+            <div *ngIf="tripStats === '3'">
+              Cancelled
+              {{tripStats}}
+            </div>
+            <div *ngIf="tripStats === '4'">
+              Started
+              {{tripStats}}
+            </div>
+
            
          </div>
          <div class="h-[20%]  w-full">
