@@ -1,7 +1,6 @@
 import { Component , OnInit} from '@angular/core';
 import { DashboardService } from 'src/app/service/dashboard.service';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -37,8 +36,8 @@ export class DashboardComponent implements OnInit {
   step1Active: boolean = true;
   step2Active: boolean = false;
   step3Active: boolean = false;
-  step4Active: boolean = false; // Added for step 4
-  step5Active: boolean = false; // Added for step 5
+  step4Active: boolean = false; 
+  step5Active: boolean = false; 
 
  
   constructor(
@@ -48,20 +47,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     const storedUserDetails = localStorage.getItem('userDetails');
-    // check if the gotten items exists in local storage
+
     if (storedUserDetails) {
-      // Parse the storedUserDetails JSON string to an object
       this.userDetails = JSON.parse(storedUserDetails);
       console.log('in dashboard component:', this.userDetails);
 
     } else {
       console.log('User details not found in localStorage.');
     }
-
-    // this.getOpenTrip()
     }
-
-  
 
   getOpenTrip(){
     // alert(this.credentials.trip_id);
@@ -85,7 +79,15 @@ export class DashboardComponent implements OnInit {
     )
      },1500)
 
+  }
 
+  getTripStatus(trip_id:number){
+    //  alert(trip_id)
+     this.Dashboard.getTripStatus(trip_id).subscribe(
+      (res:any)=>{
+        console.log('trip status',res)
+      }
+     )
   }
 
   acceptTripFunction(tripId: any) {
@@ -113,6 +115,7 @@ export class DashboardComponent implements OnInit {
   
                   setTimeout(() => {
                     this.alert = false
+                    this.getTripStatus(trip_id)
                   }, 2000);
                 
                   this.acceptTrip = !this.acceptTrip
@@ -263,11 +266,7 @@ export class DashboardComponent implements OnInit {
   }
 
   rateTripFunction(trip_id:any){
-     window.alert('opps no APi')
+     location.reload()
   }
-
-  
-  
- 
 
 }

@@ -19,17 +19,16 @@ export class DashboardService {
 
   constructor(public http: HttpClient) { }
 
-//  getOpenTrips(token:string): Observable<any> {
-//     const headers = new HttpHeaders({
-//       'Content-Type': 'application/json',
-//       'Accept': 'application/json',
-//       'Authorization': `Bearer ${token}`,
-//     });
-
-//     return this.http.get<any>(`${this.baseUrl}/driver/trip/get_trips`, { headers: headers });
-//   }
  getOpenTripsById(trip_id:number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/driver/trip/show/${trip_id}`,);
+  }
+ getTripStatus(trip_id:number): Observable<any> {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    // 'Authorization': `Bearer ${token}`,
+  });
+    return this.http.get<any>(`${this.baseUrl}/driver/trip/status_driver/${trip_id}`,  { headers: headers });
   }
 
   accceptTripReq(trip_id:number): Observable<any> {
@@ -58,6 +57,7 @@ export class DashboardService {
     });
     return this.http.put<any>(`${this.baseUrl}/driver/trip/cancel/${trip_id}`, formData, { headers: headers });
   }
+
   completeTrip(trip_id:number, formData:any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -67,11 +67,6 @@ export class DashboardService {
     return this.http.put<any>(`${this.baseUrl}/driver/trip/complete/${trip_id}`, formData, { headers: headers });
   }
 
- 
-
-
-
-
-
+  
 }
 

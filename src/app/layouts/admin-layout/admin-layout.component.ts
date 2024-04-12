@@ -68,6 +68,8 @@ export class AdminLayoutComponent implements OnInit {
 
   async logout() {
     const {token} = this.userDetails;
+    // localStorage.clear()
+    // this.router.navigate(['/login']) 
     try {
        this.auth.logout(token).subscribe(
         (res: any) => {
@@ -76,7 +78,9 @@ export class AdminLayoutComponent implements OnInit {
             window.alert(res.data.message);
             localStorage.clear()
             this.router.navigate(['/login']) 
-          } else {}
+          } else {
+            window.alert(res.data.message);
+          }
         }
       ) 
     } catch (error) {

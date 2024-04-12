@@ -31,30 +31,29 @@
             <h2 class="h2"> Ride Details </h2>
          </div>
          <div class="h-[50%] w-full">
-           <div class="trip details flex mt-2">
+           <div class="trip details h-[30%] flex mt-2">
               <div class="w-[80%]">
                <h4 class="h5 mt-2">Ride ID: {{open_trips?.trip.id}} </h4>
               </div>
-              <div class="w-[25%] px-2">
-               <span  *ngIf="acceptTrip">
+              <div class="w-[25%] h-full  px-2">
+               <div  *ngIf="acceptTrip " class="h-[40%]">
                   <app-button buttonText="Accept ride" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="acceptTripFunction(open_trips?.trip.id)"></app-button>  
-               </span>
-               <span *ngIf="startTrip">
+               </div>
+               <div *ngIf="startTrip" class="h-[40%]">
                   <app-button buttonText="Start Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="startTripFunction(open_trips?.trip.id)"></app-button>  
-               </span>
+               </div>
 
-               <span *ngIf="completeTrip">
+               <div *ngIf="completeTrip " class=" h-[50%] my-1">
                   <app-button  buttonText="Complete Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="tripCompleteFunction(open_trips?.trip.id)"></app-button>  
-               </span>
+               </div>
                
-               <span *ngIf="cancelTrip">
-                  <app-button  buttonText="Cancel Trip" borderColor="#28094F" bgColor="red" textColor="#FFFFFF" (click)="cancelTripFunction(open_trips?.trip.id)"></app-button>  
-               </span>
+               <div *ngIf="cancelTrip" class="h-[50%] my-1">
+                  <app-button buttonText="Cancel Trip" borderColor="#28094F" bgColor="FFFFF" textColor="##28094F" (click)="cancelTripFunction(open_trips?.trip.id)"></app-button>  
+               </div>
 
-               <span *ngIf="rateTrip">
-                  <h5>How was your trip? give feed back:</h5>
-                  <app-button  buttonText="Rate Trip" borderColor="#28094F" bgColor="#D97706" textColor="#FFFFFF" (click)="rateTripFunction(open_trips?.trip.id)"></app-button>  
-               </span>
+               <div *ngIf="rateTrip" class="h-[50%]">
+                  <app-button  buttonText="Next trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="rateTripFunction(open_trips?.trip.id)"></app-button>  
+               </div>
                
                
            </div>
