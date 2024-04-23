@@ -46,9 +46,18 @@ export class LoginComponent implements OnInit {
               if(res.success === true){
                 this.alertMsg = "Successfly Logged in"
                 this.alertColor = 'success'
+                // console.log(res)
                 const {token} = res.data;
-                const userDtls = res.data
-                console.log(token, userDtls);
+                const userObject = res.data.user.user_profile
+                const email = res.data.user.email
+                console.log(token, userObject, email);
+
+                const userDtls = {
+                  ...userObject,
+                  email: email
+                }
+
+                console.log(userDtls)
 
                 localStorage.setItem('token', token)
                 this.users.setLoginResponse(userDtls);

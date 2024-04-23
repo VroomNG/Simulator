@@ -56,8 +56,12 @@
                 </div>
               </div>
             <div *ngIf="userDetails" class=" text-black mx-2 hidden md:block ">
-              <p class="text-[14px] font-medium capitalize leading-4 text-[#344054]"> {{userDetails.user.user_profile.firstname}} {{userDetails.user.user_profile.lastname}} </p>
-              <p class="text-[12px] font-light leading-4 "> {{userDetails.user.email}} </p>
+              <p class="text-[14px] font-medium capitalize leading-4 text-[#344054]"> 
+                {{userDetails.first_name}} {{userDetails.last_name}} 
+              </p>
+              <p class="text-[12px] font-light leading-4 ">
+                 {{userDetails.email}}
+                 </p>
             </div>
          </div>
         </div>

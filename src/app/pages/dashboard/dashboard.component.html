@@ -33,26 +33,26 @@
          <div class="h-[50%] w-full">
            <div class="trip details h-[30%] flex mt-2">
               <div class="w-[80%]">
-               <h4 class="h5 mt-2">Ride ID: {{open_trips?.trip.id}} </h4>
+               <h4 class="h5 mt-2">Ride ID: {{open_trips?.trip.uuid}} </h4>
               </div>
               <div class="w-[25%] h-full  px-2">
                <div  *ngIf="acceptTrip " class="h-[40%]">
-                  <app-button buttonText="Accept ride" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="acceptTripFunction(open_trips?.trip.id)"></app-button>  
+                  <app-button buttonText="Accept ride" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="acceptTripFunction(open_trips?.trip.uuid)"></app-button>  
                </div>
                <div *ngIf="startTrip" class="h-[40%]">
-                  <app-button buttonText="Start Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="startTripFunction(open_trips?.trip.id)"></app-button>  
+                  <app-button buttonText="Start Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="startTripFunction(open_trips?.trip.uuid)"></app-button>  
                </div>
 
                <div *ngIf="completeTrip " class=" h-[50%] my-1">
-                  <app-button  buttonText="Complete Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="tripCompleteFunction(open_trips?.trip.id)"></app-button>  
+                  <app-button  buttonText="Complete Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="tripCompleteFunction(open_trips?.trip.uuid)"></app-button>  
                </div>
                
                <div *ngIf="cancelTrip" class="h-[50%] my-1">
-                  <app-button buttonText="Cancel Trip" borderColor="#28094F" bgColor="FFFFF" textColor="##28094F" (click)="cancelTripFunction(open_trips?.trip.id)"></app-button>  
+                  <app-button buttonText="Cancel Trip" borderColor="#28094F" bgColor="FFFFF" textColor="##28094F" (click)="cancelTripFunction(open_trips?.trip.uuid)"></app-button>  
                </div>
 
                <div *ngIf="rateTrip" class="h-[50%]">
-                  <app-button  buttonText="Next trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="rateTripFunction(open_trips?.trip.id)"></app-button>  
+                  <app-button  buttonText="Next trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="rateTripFunction(open_trips?.trip.uuid)"></app-button>  
                </div>
                
                
@@ -82,6 +82,7 @@
 
           <div class="estimated_time text-green-900 flex text-[10px] mt-2 py-2">
             <span>Trip status:</span>
+            
             <div *ngIf="!tripStats">
               Scheduled
               <p>{{tripStats}}</p>
@@ -90,12 +91,12 @@
               Accepted
               {{tripStats}}
             </div>
-            <div *ngIf="tripStats === '2'">
+            <div *ngIf="tripStats === '5'">
               Completed
               {{tripStats}}
             </div>
             <div *ngIf="tripStats === '3'">
-              Cancelled
+              Ongoing
               {{tripStats}}
             </div>
             <div *ngIf="tripStats === '4'">

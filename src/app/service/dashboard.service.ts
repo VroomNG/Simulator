@@ -22,22 +22,22 @@ export class DashboardService {
  getOpenTripsById(trip_id:number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/driver/trip/show/${trip_id}`,);
   }
- getTripStatus(trip_id:number): Observable<any> {
+ getTripStatus(trip_id:number,longitude: number, latitude: number): Observable<any> {
   const headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     // 'Authorization': `Bearer ${token}`,
   });
-    return this.http.get<any>(`${this.baseUrl}/driver/trip/status_driver/${trip_id}`,  { headers: headers });
+    return this.http.get<any>(`${this.baseUrl}/driver/trip/status/${trip_id}?longitude=${longitude}&latitude=${latitude}`,  { headers: headers });
   }
 
-  accceptTripReq(trip_id:number): Observable<any> {
+  accceptTripReq(trip_id:number, longitude: number, latitude: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       // 'Authorization': `Bearer ${token}`,
     });
-    return this.http.put<any>(`${this.baseUrl}/driver/trip/accept/${trip_id}`, { headers: headers });
+    return this.http.put<any>(`${this.baseUrl}/driver/trip/accept/${trip_id}?longitude=${longitude}&latitude=${latitude}`, { headers: headers });
   }
   
   startTrip(trip_id:number, formData:any): Observable<any> {
@@ -49,13 +49,13 @@ export class DashboardService {
     return this.http.put<any>(`${this.baseUrl}/driver/trip/start/${trip_id}`, formData, { headers: headers });
   }
 
-  cancelTrip(trip_id:number, formData:any): Observable<any> {
+  cancelTrip(trip_id:number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       // 'Authorization': `Bearer ${token}`,
     });
-    return this.http.put<any>(`${this.baseUrl}/driver/trip/cancel/${trip_id}`, formData, { headers: headers });
+    return this.http.put<any>(`${this.baseUrl}/driver/trip/cancel/${trip_id}`, { headers: headers });
   }
 
   completeTrip(trip_id:number, formData:any): Observable<any> {
