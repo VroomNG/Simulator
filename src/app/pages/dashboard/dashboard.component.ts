@@ -157,8 +157,6 @@ export class DashboardComponent implements OnInit {
   }
 
   acceptTripFunction(tripId: any) {
-    // this.acceptTrip = !this.acceptTrip
-
     this.alert = true
     this.alertMsg = 'accpeting trip...'
     this.alertColor = 'primary'
@@ -171,29 +169,53 @@ export class DashboardComponent implements OnInit {
       this.Dashboard.accceptTripReq(trip_id,latitude,longitude).subscribe(
         (res: any) => {
           console.log('accept trip res', res)
-          // this.acceptTrip = !this.acceptTrip
+          const message = res.data.message
           this.tripResponse = res.data.trip.security_code;
           console.log('trip response detais', this.tripResponse)
-          if (res.success == true) {
 
-            this.alertMsg = 'Trip Accepted'
-            this.alertColor = 'success'
+          if (res.success == true) {
+            this.success = true;
+            this.successMsg = message
 
             this.loadingState = !this.loadingState
 
             setTimeout(() => {
-              this.alert = false
+              this.success = false
               this.getTripStatus(trip_id,longitude,latitude)
-
             }, 1000);
 
             this.acceptTrip = !this.acceptTrip
             this.startTrip = !this.startTrip
             console.log('trip response detais', this.tripResponse)
-          } else {
-            alert('trip not accepted')
-            
+          } 
+          else if (res.success == false){
+            this.failed = true;
+            this.errorMsg = message;
+
+            setTimeout(()=>{
+              window.alert('failed to accept trip')
+            },1000)
+
+            setTimeout(() => {
+              this.failed = false
+              this.alert = false
+              this.getTripStatus(trip_id,longitude,latitude)
+            }, 2000);
           }
+        },(error:any)=>{
+          console.log('accept trip error', error)
+          console.error('status:', error.status);
+          console.error('success:', error.error.success);
+          console.error('message:', error.error.message);
+          console.error('http:', error.error.data.message);
+
+          const message = error.error.data.message
+          this.failed = true;
+          this.errorMsg = message;
+
+          setTimeout(() => {
+            this.failed = false
+          }, 5000);   
         }
       )
     }, 1500);
@@ -213,16 +235,17 @@ export class DashboardComponent implements OnInit {
       this.Dashboard.startTrip(trip_id, formData).subscribe(
         (res: any) => {
           console.log('start trip res', res)
-          // this.open_trips = res.data
+          const message = res.data.message
+        
           if (res.success === true) {
-
-            this.alertMsg = 'Trip Started'
-            this.alertColor = 'warning'
-
             this.step2Active = true
+
+            this.success = true;
+            this.successMsg = message
 
             setTimeout(() => {
               this.alert = false
+              this.success = false
             }, 2000);
 
             this.startTrip = !this.startTrip
@@ -230,9 +253,31 @@ export class DashboardComponent implements OnInit {
             this.cancelTrip = !this.cancelTrip
             this.ongoingTrip = res.data.trip
             console.log('ongoing trip detais', this.ongoingTrip)
-          } else {
-            window.alert('trip not started')
+          }  else if (res.success == false){
+            
+            this.failed = true;
+            this.errorMsg = message;
+
+            setTimeout(() => {
+              this.failed = false             
+            }, 2000);
           }
+        },(error:any)=>{
+
+          console.log('Start trip error', error)
+          console.error('status:', error.status);
+          console.error('success:', error.error.success);
+          console.error('message:', error.error.message);
+          console.error('http:', error.error.data.message);
+
+          const message = error.error.data.message
+          this.failed = true;
+          this.errorMsg = message;
+
+          setTimeout(() => {
+            this.failed = false
+            // window.location.reload()
+          }, 2000);
         }
       )
     }, 1500);
@@ -256,7 +301,6 @@ export class DashboardComponent implements OnInit {
     const formData = {
       stop_lat: 6.447809299999999,
       stop_long:  3.4723495,
-      // stop_title: "11 Military St",
       stop_address: "Victoria Arobieke St, Lekki Phase I, Lekki 106104, Lagos, Nigeria"
     }
 
@@ -264,16 +308,19 @@ export class DashboardComponent implements OnInit {
       this.Dashboard.completeTrip(trip_id, formData).subscribe(
         (res: any) => {
           console.log('complete trip res', res)
-          // this.open_trips = res.data
+          const message = res.data.message
+   
           if (res.success === true) {
-
             this.alertMsg = 'Trip Complete'
             this.alertColor = 'success'
 
+            this.success = true;
+            this.successMsg = message;
             this.step3Active = true;
 
             setTimeout(() => {
               this.alert = false
+              this.success = false
             }, 2000);
 
             this.completeTrip = !this.completeTrip
@@ -283,10 +330,32 @@ export class DashboardComponent implements OnInit {
 
             this.rateTrip = !this.rateTrip
             console.log('completed trip detais', this.tripComplete)
-          } else if(res.error.data.success === false) {
-            window.alert(res.error.data.message)
-            window.alert('no paid')
+          } 
+          else if (res.success == false){
+            this.failed = true;
+            this.errorMsg = message;
+
+            setTimeout(() => {
+              this.failed = false
+              
+            }, 2000);
           }
+        },(error:any)=>{
+
+          console.log('Complete Trip error', error)
+          console.error('status:', error.status);
+          console.error('success:', error.error.success);
+          console.error('message:', error.error.message);
+          console.error('http:', error.error.data.message);
+
+          const message = error.error.data.message
+          this.failed = true;
+          this.errorMsg = message;
+
+          setTimeout(() => {
+            this.failed = false
+
+          }, 2000);
         }
       )
     }, 2000);
@@ -302,25 +371,26 @@ export class DashboardComponent implements OnInit {
 
     const trip_id = tripId;
 
-    const formData = {
-      driver_canceled_reason: "i was just testing the trip winks"
-    }
     setTimeout(() => {
       this.Dashboard.cancelTrip(trip_id).subscribe(
         (res: any) => {
           console.log('cancel trip res', res)
+          const message = res.data.message
 
           if (res.success === true) {
 
-            this.alertMsg = res.data.message
+            this.alertMsg = message
             this.alertColor = 'success'
 
             this.step4Active = true
 
+            this.success = true
+            this.successMsg = message
+
             setTimeout(() => {
               this.alert = false
+              this.success = false
             }, 2000);
-
 
 
             this.completeTrip = !this.completeTrip
@@ -329,9 +399,31 @@ export class DashboardComponent implements OnInit {
             this.rateTrip = !this.rateTrip
 
             console.log('cancel message', res.data.message)
-          } else {
-            window.alert('trip not started')
+            
+          } else if (res.success == false){
+            this.failed = true;
+            this.errorMsg = message;
+
+            setTimeout(() => {
+              this.failed = false
+            }, 2000);
           }
+        },(error:any)=>{
+
+          console.log('Cancel Trip error', error)
+          console.error('status:', error.status);
+          console.error('success:', error.error.success);
+          console.error('message:', error.error.message);
+          console.error('http:', error.error.data.message);
+
+          const message = error.error.data.message
+          this.failed = true;
+          this.errorMsg = message;
+
+          setTimeout(() => {
+            this.failed = false
+            // window.location.reload()
+          }, 2000);
         }
       )
     }, 2000);

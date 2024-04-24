@@ -1,4 +1,7 @@
 <app-loader *ngIf="loading"></app-loader>
+<app-vr-alert  [color]="alertColor" *ngIf="alert" >
+   {{ alertMsg }}
+</app-vr-alert>
 
 <div class="absolute w-full ">
   <div *ngIf="success || failed || regular" class=" w-full flex justify-center p-4 z-999">
@@ -13,10 +16,6 @@
     </div>
   </div>
 </div>
-
-
-
-
 
 <div class="w-full h-full flex justify-center" *ngIf="rideId">
    <div class=" w-[60%] h-[20%] pt-4">
