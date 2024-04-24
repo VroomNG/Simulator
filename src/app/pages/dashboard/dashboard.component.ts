@@ -10,6 +10,15 @@ import { InvokeFunctionExpr } from '@angular/compiler';
 })
 export class DashboardComponent implements OnInit {
 
+  success:boolean = false;
+  failed:boolean = false;
+
+  successMsg:any = 'Success'
+  errorMsg:any = 'Failed'
+
+  regular:boolean = false;
+  regularMsg:any = 'Regular'
+
   fetchSubscription!: Subscription;
   rideId: boolean = true;
   loading: boolean = false;
@@ -66,10 +75,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  reload(){
+    window.location.reload()
+  }
+
   getOpenTrip() {
-    // alert(this.credentials.trip_id);
     const trip_id = this.credentials.trip_id
-    // alert(trip_id)
 
     setTimeout(() => {
       this.loading = true
@@ -79,27 +90,52 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       this.Dashboard.getOpenTripsById(trip_id).subscribe(
         (res: any) => {
-          console.log(res)
-          this.open_trips = res.data
-          this.rideId = false;
+          console.log('response',res)
+          const message = res.data.message
+
+          if(res.status == 200){
+            this.open_trips = res.data
+
+            this.rideId = false;
+            this.loading = false;
+
+            this.success = true;
+            this.successMsg =  message;
+
+            setTimeout(()=>{
+              this.success = false
+            },2000)
+             
+          }
+        },(error: any) => {
+
+          console.error('An error occurred:', error);
+          console.error('status:', error.status);
+          console.error('success:', error.error.success);
+          console.error('message:', error.error.message);
+          console.error('http:', error.error.data.message);
+
+          const message = error.error.data.message
+          this.failed = true;
+          this.errorMsg = message;
+          
+          this.regular = true;
+          this.regularMsg = 'No Trip Found!!'
+
+          setTimeout(() => {
+            this.failed = false
+            this.regular = false
+            window.location.reload()
+          }, 30000);
           this.loading = false;
-          // this.acceptTrip = res.success;
         }
+
       )
     }, 1500)
 
   }
 
-  // getTripStatus(trip_id:number){
-  //   //  alert(trip_id)
-  //    this.Dashboard.getTripStatus(trip_id).subscribe(
-  //     (res:any)=>{
-  //       console.log('trip status',res)
-  //       this.tripStats = res.data.trip_status_code
-  //       console.log('trip status code,', this.tripStats)
-  //     }
-  //    )
-  // }
+
   getTripStatus(trip_id: number, longitude: number, latitude:number) {
 
 

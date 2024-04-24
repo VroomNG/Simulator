@@ -1,0 +1,38 @@
+.alert {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.alert .message {
+  margin-left: 10px;
+}
+
+.alert.success {
+  background-color: #e0e0e0;
+}
+
+.alert.failed {
+  background-color: #e0e0e0;
+}
+
+.alert.regular {
+  background-color: #e0e0e0;
+}
+
+.alert i {
+  font-size: 18px;
+  margin-right: 5px;
+}
+.success i {
+ color: green;
+}
+.failed i {
+color: red;
+}
+.regular i {
+color: rgb(255, 211, 16);
+}
+

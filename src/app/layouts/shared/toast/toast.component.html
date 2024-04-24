@@ -1,0 +1,18 @@
+<!-- <div class="alert" [ngClass]="bgColor">
+  
+</div> -->
+<div class="alert"  [ngClass]="{'success': type === 'success', 'failed': type === 'failed', 'regular':type === 'regular'}" [style.background-color]="bgColor">
+    <ng-content></ng-content>
+    <div *ngIf="type === 'success'">
+      <i class="fa-solid fa-check-circle"></i>
+    </div>
+    <div *ngIf="type === 'failed'">
+      <i class="fa-solid fa-times-circle"></i>
+    </div>
+    <div *ngIf="type === 'regular'">
+        <i class="fa-regular fa-face-sad-tear"></i>
+    </div>
+    <div class="message">
+        <span style="color: #000000;">{{ message }}</span>
+    </div>
+</div>

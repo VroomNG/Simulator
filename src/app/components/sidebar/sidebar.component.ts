@@ -24,13 +24,7 @@ export class SidebarComponent implements OnInit {
 
   ROUTES: RouteInfo[] = [
     { id: 0, path: '/dashboard', title: 'Simulator', icon: 'fa fa-store', class: '', children: '' },
-    // { id: 0.2, path: '/users', title: 'Users', icon: 'fa-solid fa-user-tie', class: '', children: [] },
-    // { id: 1, path: '/trips-menu', title: 'Trips', icon: 'fa-solid fa-chess', class: '', children: [] },
-    // { id: 2, path: '/vehicles-menu', title: 'Vehicles', icon: 'fa-solid fa-truck-monster text-primary', class: '', children: [] },
-    // { id: 3, path: '/reviews-menu', title: 'Review and Ratings', icon: ' fa-solid fa-handshake text-primary', class: '', children: [] },
-    // { id: 4, path: '/activity-log', title: 'Activity log', icon: 'fa-solid fa-car text-primary', class: '', children: [] },
-    // { id: 5, path: '/e-menu', title: 'Explore', icon: 'fa-solid fa-motorcycle text-primary', class: '', children: [] },
-    // { id: 6, path: '/app-actions-menu', title: 'App Actons', icon: 'fa-solid fa-bus', class: '', children: [] },
+
   
   ];
 } 
