@@ -303,7 +303,7 @@ export class DashboardComponent implements OnInit {
       stop_lat: 6.447809299999999,
       stop_long:  3.4723495,
       stop_address: "Victoria Arobieke St, Lekki Phase I, Lekki 106104, Lagos, Nigeria",
-      stop_title: "title",
+      stop_title: " Lekki Phase I, Lekki 106104, Lagos, Nigeria",
     }
 
     setTimeout(() => {
