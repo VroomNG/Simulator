@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { ProfileCardComponent } from './profile-card/profile-card.component';
-// import { VInputComponent } from './v-input/v-input.component';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonComponent } from '../layouts/shared/button/button.component';
 
 
 @NgModule({
@@ -17,22 +16,18 @@ import { ProfileCardComponent } from './profile-card/profile-card.component';
     CommonModule,
     RouterModule,
     NgbModule,
-    // FormsModule
-    ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    DialogModule,
+    
   ],
   declarations: [
-
     NavbarComponent,
     SidebarComponent,
-    // ProfileCardComponent
-    // VInputComponent
   ],
   exports: [
-  
     NavbarComponent,
     SidebarComponent,
-    // ProfileCardComponent,
-    // VInputComponent,
     ReactiveFormsModule
   ]
 })

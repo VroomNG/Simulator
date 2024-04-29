@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/service/dashboard.service';
 import { interval, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { InvokeFunctionExpr } from '@angular/compiler';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -41,8 +41,9 @@ export class DashboardComponent implements OnInit {
   tripComplete: any
   rateTrip: any;
 
-  userDetails: any;
+  cancelMode = false;
 
+  userDetails: any;
   acceptTrip: boolean = true;
   startTrip: boolean = false;
   cancelTrip: boolean = false;
@@ -362,7 +363,6 @@ export class DashboardComponent implements OnInit {
 
 
   }
-
   cancelTripFunction(tripId: number) {
 
     this.alert = true
@@ -430,7 +430,7 @@ export class DashboardComponent implements OnInit {
 
 
   }
-
+  
   rateTripFunction(trip_id: any) {
 
     this.stopFetching()
