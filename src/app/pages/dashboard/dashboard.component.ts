@@ -55,8 +55,8 @@ export class DashboardComponent implements OnInit {
   step4Active: boolean = false;
   step5Active: boolean = false;
 
-  latitude: number = 6.43998479287182;
-  longitude: number = 3.40810764049567; 
+  latitude: number = 6.523900071563629;
+  longitude: number = 3.3800615591471472; 
 
 
   constructor(
@@ -371,8 +371,10 @@ export class DashboardComponent implements OnInit {
 
     const trip_id = tripId;
 
+
+
     setTimeout(() => {
-      this.Dashboard.cancelTrip(trip_id).subscribe(
+      this.Dashboard.cancelTrip(trip_id, this.latitude, this.longitude).subscribe(
         (res: any) => {
           console.log('cancel trip res', res)
           const message = res.data.message
@@ -430,7 +432,7 @@ export class DashboardComponent implements OnInit {
 
 
   }
-  
+
   rateTripFunction(trip_id: any) {
 
     this.stopFetching()
