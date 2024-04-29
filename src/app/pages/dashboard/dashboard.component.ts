@@ -302,7 +302,8 @@ export class DashboardComponent implements OnInit {
     const formData = {
       stop_lat: 6.447809299999999,
       stop_long:  3.4723495,
-      stop_address: "Victoria Arobieke St, Lekki Phase I, Lekki 106104, Lagos, Nigeria"
+      stop_address: "Victoria Arobieke St, Lekki Phase I, Lekki 106104, Lagos, Nigeria",
+      stop_title: "title",
     }
 
     setTimeout(() => {
@@ -370,8 +371,6 @@ export class DashboardComponent implements OnInit {
     this.alertColor = 'primary'
 
     const trip_id = tripId;
-
-
 
     setTimeout(() => {
       this.Dashboard.cancelTrip(trip_id, this.latitude, this.longitude).subscribe(
