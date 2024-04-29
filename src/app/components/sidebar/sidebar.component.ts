@@ -12,6 +12,10 @@ export class SidebarComponent implements OnInit {
    @Output() displayDialog:boolean  = false;
    cancelMode = false;
 
+
+  latitude: number = 6.523900071563629;
+  longitude: number = 3.3800615591471472; 
+
    credentials = {
     trip_id: 0,
   }
@@ -36,7 +40,7 @@ export class SidebarComponent implements OnInit {
     const trip_id = this.credentials.trip_id
 
     setTimeout(() => {
-      this.Dashboard.cancelTrip(trip_id).subscribe(
+      this.Dashboard.cancelTrip(trip_id,this.latitude, this.longitude).subscribe(
         (res: any) => {
           console.log('cancel trip res', res)
           const message = res.data.message

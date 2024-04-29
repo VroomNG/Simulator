@@ -49,13 +49,13 @@ export class DashboardService {
     return this.http.put<any>(`${this.baseUrl}/driver/trip/start/${trip_id}`, formData, { headers: headers });
   }
 
-  cancelTrip(trip_id:number): Observable<any> {
+  cancelTrip(trip_id:number, latitude: number, longitude: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       // 'Authorization': `Bearer ${token}`,
     });
-    return this.http.put<any>(`${this.baseUrl}/driver/trip/cancel/${trip_id}`, { headers: headers });
+    return this.http.put<any>(`${this.baseUrl}/driver/trip/cancel/${trip_id}?longitude=${longitude}&latitude=${latitude}`, { headers: headers });
   }
 
   completeTrip(trip_id:number, formData:any): Observable<any> {
