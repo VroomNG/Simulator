@@ -448,7 +448,7 @@ export class DashboardComponent implements OnInit {
           stop_title: "Lagos Island",
           stop_address: "11 Military St, Lagos Island, Lagos 102273, Lagos, Nigeria"
         }
-        this.Dashboard.cashPayment(tripId, cardPayload ).subscribe(
+        this.Dashboard.cardPayment(tripId, cardPayload ).subscribe(
           (res: any) => {
             console.log('card pay', res)
             const message = res.data.message

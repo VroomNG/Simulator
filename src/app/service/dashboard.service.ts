@@ -71,14 +71,14 @@ export class DashboardService {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     });
-    return this.http.put<any>(`${this.baseUrl}/pay/cash/${trip_id}`, cardPayload,  { headers: headers });
+    return this.http.put<any>(`${this.baseUrl}/pay/card/${trip_id}`, cardPayload,  { headers: headers });
   }
   cashPayment(trip_id:number, cashPayload:any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     });
-    return this.http.put<any>(`${this.baseUrl}/pay/card/${trip_id}`, cashPayload, { headers: headers });
+    return this.http.put<any>(`${this.baseUrl}/pay/cash/${trip_id}`, cashPayload, { headers: headers });
   }
   bankTransferPayment(trip_id:number, bankPayload:any): Observable<any> {
     const headers = new HttpHeaders({
