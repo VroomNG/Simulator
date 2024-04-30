@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit {
 
   tripStats: string = '0';
   status: string = '0';
+  tripType:string = '';
 
   credentials = {
     trip_id: 0,
@@ -152,7 +153,10 @@ export class DashboardComponent implements OnInit {
         console.log('trip status', res);
         console.log('polling...'),
           this.tripStats = res.data.trip_status_code;
+          this.tripType = res.data.trip.payment_type;
+
         console.log('trip status code', this.tripStats);
+        console.log('trip type', this.tripType);
       }
     );
   }
@@ -179,6 +183,7 @@ export class DashboardComponent implements OnInit {
             this.successMsg = message
 
             this.loadingState = !this.loadingState
+            this.alert = false;
 
             setTimeout(() => {
               this.success = false
@@ -209,13 +214,22 @@ export class DashboardComponent implements OnInit {
           console.error('success:', error.error.success);
           console.error('message:', error.error.message);
           console.error('http:', error.error.data.message);
+          console.error('http:', error.error.data.trip.uuid);
 
           const message = error.error.data.message
+          const ongoingTripId = error.error.data.trip.uuid 
+
+
+          this.alert = true;
           this.failed = true;
           this.errorMsg = message;
 
+          this.regular = true;
+          this.regularMsg = 'Ongoing trip id '+ ongoingTripId
+
           setTimeout(() => {
             this.failed = false
+           
           }, 5000);   
         }
       )
@@ -295,7 +309,7 @@ export class DashboardComponent implements OnInit {
   tripCompleteFunction(tripId: number) {
 
     this.alert = true
-    this.alertMsg = 'Rounding up trip...'
+    this.alertMsg = 'Rounding up your trip...'
     this.alertColor = 'primary'
     const trip_id = tripId;
 
@@ -363,6 +377,188 @@ export class DashboardComponent implements OnInit {
     }, 2000);
 
 
+  }
+
+  tripCompleteInit(tripId: number) {
+
+    switch (this.tripType) {
+      case 'cash':
+        alert('cash payment');
+        const cashPayload  = {
+            stop_lat: 3.403664923449183,
+            stop_long: 3.403664923449183,
+            stop_title: "Lagos Island",
+            stop_address: "11 Military St, Lagos Island, Lagos 102273, Lagos, Nigeria"
+        }
+        this.Dashboard.cashPayment(tripId, cashPayload).subscribe(
+          (res: any) => {
+            console.log('cash pay', res)
+            const message = res.data.message
+  
+            if (res.success === true) {
+  
+              this.alertMsg = message
+              this.alertColor = 'success'
+  
+              this.step3Active = true
+  
+              this.success = true
+              this.successMsg = message
+  
+              setTimeout(() => {
+                this.alert = false;
+                this.success = false;
+                this.stopFetching()
+              }, 2000);
+
+  
+              console.log('cash pay res message', res.data.message)
+              
+            } else if (res.success == false){
+              this.failed = true;
+              this.errorMsg = message;
+  
+              setTimeout(() => {
+                this.failed = false
+              }, 2000);
+            }
+          },(error:any)=>{
+  
+            console.log('cash pay error', error)
+            console.error('status:', error.status);
+            console.error('success:', error.error.success);
+            console.error('message:', error.error.message);
+            console.error('http:', error.error.data.message);
+  
+            const message = error.error.data.message
+            this.failed = true;
+            this.errorMsg = message;
+  
+            setTimeout(() => {
+              this.failed = false
+            }, 2000);
+          }
+        )
+        break;
+      case 'card':
+        alert('card payment');
+        const cardPayload  = {
+          stop_lat: 3.403664923449183,
+          stop_long: 3.403664923449183,
+          stop_title: "Lagos Island",
+          stop_address: "11 Military St, Lagos Island, Lagos 102273, Lagos, Nigeria"
+        }
+        this.Dashboard.cashPayment(tripId, cardPayload ).subscribe(
+          (res: any) => {
+            console.log('card pay', res)
+            const message = res.data.message
+  
+            if (res.success === true) {
+  
+              this.alertMsg = message
+              this.alertColor = 'success'
+  
+              this.step3Active = true
+  
+              this.success = true
+              this.successMsg = message
+  
+              setTimeout(() => {
+                this.alert = false
+                this.success = false
+                this.stopFetching()
+              }, 2000);
+  
+              console.log('card pay res message', res.data.message)
+              
+            } else if (res.success == false){
+              this.failed = true;
+              this.errorMsg = message;
+  
+              setTimeout(() => {
+                this.failed = false
+              }, 2000);
+            }
+          },(error:any)=>{
+  
+            console.log('card pay error', error)
+            console.error('status:', error.status);
+            console.error('success:', error.error.success);
+            console.error('message:', error.error.message);
+            console.error('http:', error.error.data.message);
+  
+            const message = error.error.data.message
+            this.failed = true;
+            this.errorMsg = message;
+  
+            setTimeout(() => {
+              this.failed = false
+            }, 2000);
+          }
+        )
+        break;
+      case 'bank_transfer':
+        alert('bank transfer payment');
+        const bankPayload  = {
+          stop_lat: 3.403664923449183,
+          stop_long: 3.403664923449183,
+          stop_title: "Lagos Island",
+          stop_address: "11 Military St, Lagos Island, Lagos 102273, Lagos, Nigeria"
+        }
+        this.Dashboard.bankTransferPayment(tripId, bankPayload ).subscribe(
+          (res: any) => {
+            console.log('bank pay', res)
+            const message = res.data.message
+  
+            if (res.success === true) {
+  
+              this.alertMsg = message
+              this.alertColor = 'success'
+  
+              this.step3Active = true
+  
+              this.success = true
+              this.successMsg = message
+  
+              setTimeout(() => {
+                this.alert = false
+                this.success = false
+                this.stopFetching()
+              }, 2000);
+  
+              console.log('bank pay res message', res.data.message)
+              
+            } else if (res.success == false){
+              this.failed = true;
+              this.errorMsg = message;
+  
+              setTimeout(() => {
+                this.failed = false
+              }, 2000);
+            }
+          },(error:any)=>{
+  
+            console.log('bank pay error', error)
+            console.error('status:', error.status);
+            console.error('success:', error.error.success);
+            console.error('message:', error.error.message);
+            console.error('http:', error.error.data.message);
+  
+            const message = error.error.data.message
+            this.failed = true;
+            this.errorMsg = message;
+  
+            setTimeout(() => {
+              this.failed = false
+            }, 2000);
+          }
+        )
+
+        break;
+      default:
+
+    }
+    
   }
   cancelTripFunction(tripId: number) {
 

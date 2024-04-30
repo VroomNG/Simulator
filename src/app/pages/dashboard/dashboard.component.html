@@ -59,7 +59,7 @@
                </div>
 
                <div *ngIf="completeTrip " class=" h-[50%] my-1">
-                  <app-button  buttonText="Complete Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="tripCompleteFunction(open_trips?.trip.uuid)"></app-button>  
+                  <app-button  buttonText="Complete Trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="tripCompleteInit(open_trips?.trip.uuid)"></app-button>  
                </div>
                
                <div *ngIf="cancelTrip" class="h-[50%] my-1">
@@ -120,6 +120,9 @@
             </div>
 
            
+         </div>
+         <div class="text-[10px]">
+          trip type: {{tripType}}
          </div>
          <div class="h-[20%]  w-full">
             <span class="flex" *ngIf="loadingState">

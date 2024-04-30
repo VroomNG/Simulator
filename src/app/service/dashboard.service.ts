@@ -62,10 +62,34 @@ export class DashboardService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      // 'Authorization': `Bearer ${token}`,
     });
     return this.http.put<any>(`${this.baseUrl}/driver/trip/complete/${trip_id}`, formData, { headers: headers });
   }
+
+  cardPayment(trip_id:number, cardPayload:any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+    return this.http.put<any>(`${this.baseUrl}/pay/cash/${trip_id}`, cardPayload,  { headers: headers });
+  }
+  cashPayment(trip_id:number, cashPayload:any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+    return this.http.put<any>(`${this.baseUrl}/pay/card/${trip_id}`, cashPayload, { headers: headers });
+  }
+  bankTransferPayment(trip_id:number, bankPayload:any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+
+    return this.http.put<any>(`${this.baseUrl}/pay/bank_transfer/${trip_id}`, bankPayload, { headers: headers });
+  }
+
+
 
   
 }
