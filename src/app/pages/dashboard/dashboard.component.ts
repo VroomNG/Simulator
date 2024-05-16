@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { DashboardService } from 'src/app/service/dashboard.service';
 import { interval, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { ChatService } from 'src/app/service/chat.service';
+import SendBird from 'sendbird';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,12 +15,10 @@ export class DashboardComponent implements OnInit {
 
   success:boolean = false;
   failed:boolean = false;
-
-  successMsg:any = 'Success'
-  errorMsg:any = 'Failed'
-
   regular:boolean = false;
-  regularMsg:any = 'Regular'
+  regularMsg:any = 'Regular';
+
+  storedString: string = '45892yuio';
 
   fetchSubscription!: Subscription;
   rideId: boolean = true;
@@ -59,24 +60,207 @@ export class DashboardComponent implements OnInit {
   latitude: number = 6.523900071563629;
   longitude: number = 3.3800615591471472; 
 
+  groupChannels: any[] = [];
+  isChat:boolean = false;
+  isCall:boolean = false;
+  connected = false;
+  startConversationResult: string | undefined;
+  conversations: Array<SendBird.GroupChannel> | null | undefined;
+  listConversationsResult: string | null | undefined;
+  selectedChannel: SendBird.GroupChannel | null | undefined;
+
+  myChannels:any;
+  myMessages:any;
+
+  messages: Array<
+    SendBird.UserMessage | SendBird.FileMessage | SendBird.AdminMessage
+  > | null | undefined;
+  textMessage: any;
+  chatDialogue:boolean = false;
+  successMsg:any = 'Success'
+  errorMsg:any = 'Failed'
+
+  messageCollection: SendBird.MessageCollection | undefined;
+
 
   constructor(
-    private Dashboard: DashboardService
+    private Dashboard: DashboardService,
+    private router:Router, 
+    private chatService: ChatService
   ) { }
 
   ngOnInit() {
-
+  
     const storedUserDetails = localStorage.getItem('userDetails');
-
     if (storedUserDetails) {
       this.userDetails = JSON.parse(storedUserDetails);
-      console.log('in dashboard component:', this.userDetails);
+      console.log('User details:', this.userDetails);
 
+      const { user_uuid, first_name, last_name, profile_url } = this.userDetails;
+      const id = user_uuid;
+      const nickname = first_name + ' ' + last_name;
+      const profileUrl = profile_url;
+
+      this.chatService.init(id, nickname, profileUrl);
+
+     setTimeout(() => {
+      // this.getGroupChannels();
+      this.connectToSendbird(id);
+     },3000)
+
+     setTimeout(() => {
+   
+
+     },3500)
     } else {
       console.log('User details not found in localStorage.');
     }
-  }
 
+   }
+
+   selectChannel(channel: SendBird.GroupChannel) {
+    this.selectedChannel = channel;
+    this.chatService.getMessages(channel.url, (error: any, messages: any[]) => {
+      if (error) {
+        console.error('Failed to get messages:', error);
+      } else {
+        this.messages = messages;
+        console.log('Messages in channel', channel.url, this.messages);
+      }
+    });
+  }
+  
+
+//  openChat(trip_id:any){
+//     this.chatDialogue = !this.chatDialogue;
+//  }
+ connectToSendbird(userId: string) {
+   this.chatService.connect(userId, null, (error: any, user: any) => {
+     if (error) {
+       console.error('SendBird connection failed:', error);
+     } else {
+       console.log('SendBird connected successfully');
+       this.connected = true;
+       this.registerEventHandlers();
+       this.getMyConversations();
+     }
+   });
+ }
+ registerEventHandlers() {
+   try {
+     this.chatService.registerEventHandlers(
+       '123',
+       (data: { event: string; data: any }) => {
+         console.log('New event: ' + data.event, data.data);
+         if (this.selectedChannel) {
+           if (data.event == 'onMessageReceived' && this.messages) {
+             if (data.data.channel.url == this.selectedChannel.url) {
+               this.messages.push(data.data.message);
+               console.log('successfully registered',this.messages);
+             }
+           }
+         }
+       }
+     );
+   } catch (error) {
+     console.error('Error registering event handlers:', error);
+   }
+ }
+
+ startConversation() {
+   const otherUserId = '123df1d5-5382-4be0-9b0c-6fd1547a308c'; // Replace with the other user's ID
+   const userId = this.userDetails.user_uuid;
+
+   console.log('User id:', userId);
+   console.log('Other user id:', otherUserId);
+
+   this.chatService.createGroupChannel([userId, otherUserId], true, (error: any, channel: any) => {
+     if (error) {
+       console.error('Failed to create group channel:', error);
+     } else {
+       console.log('Group channel created successfully:', channel);
+
+       // Now, you can send a message to the group channel
+       const message = this.textMessage;
+       this.chatService.sendMessage(channel.url, message, (error: any, message: any) => {
+         if (error) {
+           console.error('Failed to send message:', error);
+         } else {
+           console.log('Message sent successfully:', message);
+           this.startConversationResult = 'Conversation created';
+          //  this.getMyConversations();
+         }
+       });
+     }
+   });
+ }
+
+ channelist:any;
+ 
+ getMyConversations() {
+   this.chatService.getGroupChannels(
+     (
+       error: SendBird.SendBirdError,
+       groupChannels: Array<SendBird.GroupChannel>
+     ) => {
+       if (error) {
+         this.listConversationsResult = 'Unable to get your conversations';
+       } else {
+         this.conversations = groupChannels;
+         console.log('channels & messages',groupChannels);
+         console.log('channels loop',groupChannels[0]);
+         
+        //  groupChannels.map((channel) => {
+        //    channel.name
+        //    console.log('mapped channnel ',channel['name'])
+        //  })
+       }
+     }
+   );
+   
+ }
+
+ 
+
+ getMessages(channel: SendBird.GroupChannel) {
+   this.selectedChannel = channel;
+   this.chatService.getMessagesFromChannel(
+     channel,
+     (
+       error: SendBird.SendBirdError,
+       messages: Array<
+         SendBird.UserMessage | SendBird.FileMessage | SendBird.AdminMessage
+       >
+       
+     ) => {
+       if (!error) {
+         this.messages = messages;
+         console.log('my messages',messages)
+       }
+     }
+   );
+ }
+
+ updateTextMessage(event: any) {
+   const value = event.target.value;
+   if (!value || !this.selectedChannel) {
+     return;
+   }
+   this.textMessage = value;
+ }
+
+ sendMessageToChannel(channelUrl: string) {
+   const message = 'Hello from SendBird!';
+   this.chatService.sendMessage(channelUrl, message, (error: any, message: any) => {
+     if (error) {
+       console.error('Failed to send message:', error);
+     } else {
+       console.log('Message sent successfully:', message);
+     }
+   });
+ }
+   
+   
   reload(){
     window.location.reload()
   }
@@ -184,6 +368,8 @@ export class DashboardComponent implements OnInit {
 
             this.loadingState = !this.loadingState
             this.alert = false;
+
+            this.isChat = !this.isChat
 
             setTimeout(() => {
               this.success = false
@@ -635,5 +821,11 @@ export class DashboardComponent implements OnInit {
       location.reload()
     })
   }
+
+  next() {
+    const url = `http://localhost:5173/?userid=${this.userDetails.user_uuid}`;
+    window.open(url, '_blank');
+  }
+
 
 }

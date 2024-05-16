@@ -3,6 +3,45 @@
    {{ alertMsg }}
 </app-vr-alert>
 
+<p-dialog [(visible)]="chatDialogue" [modal]="true" [responsive]="true" [closable]="false"  class="absolute">
+   
+    <div class="w-[80vh] h-[60vh] flex items-start justify-center ">
+        <div class="h-[95%] w-[95%]">
+          <div class="h-[10%] flex items-center justify-between w-full"> 
+            <h3 class="h3 text-[#28094F]">Send A message to the rider</h3>
+            <button (click)="chatDialogue = !chatDialogue">
+                <i class="fa fa-times text-[20px]" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class=" w-[100%] h-[20%] pt-4">
+            <app-button class="w-8 " [buttonText]="connected ? 'User connected' : 'Connect to chat'" textColor="#FFFFFF"  [bgColor]="connected ? 'green' : '#0000FF'"></app-button>
+          
+          <div *ngIf="connected">
+            <input class="form-controls" type="text" [(ngModel)]="textMessage">
+            <div>
+              <button class="btn bg-indigo-600" (click)="startConversation()">Send</button>
+              <div>
+                {{ startConversationResult }}
+              </div>
+            </div>
+
+            <div *ngIf="conversations && conversations.length > 0">
+              <h2>Conversations</h2>
+              <div class=" w-full bg-red-400 text-white" *ngFor="let conversation of conversations">
+                <h3> {{ conversation }}</h3>
+              </div>
+            </div>
+            
+            
+            
+          <div>
+            </div>
+          </div>
+      </div>
+    </div>  
+  </div>                                 
+</p-dialog>
+
 <div class="absolute w-full ">
   <div *ngIf="success || failed || regular" class=" w-full flex justify-center p-4 z-999">
     <div class="w-[60%]">
@@ -27,6 +66,8 @@
                 type="email" name="email" [(ngModel)]="credentials.trip_id"
                 placeholder="Enter Trip ID" />
             </div>
+
+           
            
           </div>
         <div class="w-[20%]">
@@ -35,7 +76,10 @@
        </form>
    </div>
 
+   
+
 </div>
+
 
 
 <div class=" w-full h-full flex items-center justify-center " *ngIf="open_trips">
@@ -68,6 +112,12 @@
 
                <div *ngIf="rateTrip" class="h-[50%]">
                   <app-button  buttonText="Next trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="rateTripFunction(open_trips?.trip.uuid)"></app-button>  
+               </div>
+
+               <div *ngIf="isChat" class="h-[50%] my-1">
+                  <!-- <app-button buttonText="Chat" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="openChat(open_trips?.trip.uuid)"></app-button> -->
+                  <app-button buttonText="Chat Rider" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="next()"></app-button>
+                
                </div>
                
                
