@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
   canceledTrip: any;
   tripComplete: any
   rateTrip: any;
+  tripDetails: any;
 
   cancelMode = false;
 
@@ -371,9 +372,11 @@ export class DashboardComponent implements OnInit {
 
             this.isChat = !this.isChat
 
+
             setTimeout(() => {
               this.success = false
               this.getTripStatus(trip_id,longitude,latitude)
+              this.getTripDetails(trip_id)
             }, 1000);
 
             this.acceptTrip = !this.acceptTrip
@@ -443,6 +446,7 @@ export class DashboardComponent implements OnInit {
 
             this.success = true;
             this.successMsg = message
+            this.isCall = !this.isCall      
 
             setTimeout(() => {
               this.alert = false
@@ -822,8 +826,53 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  getTripDetails(tripId: number) {
+    this.Dashboard.getTripDetails(tripId).subscribe(
+      (res: any) => {
+        console.log('trip details ', res)
+        const message = res.data.message
+        this.tripDetails = res;
+
+        console.log('trip creator/rider id', res.data.trip.user.uuid)
+
+        if (res.success === true) {
+
+          this.success = true
+          this.successMsg = message
+
+          setTimeout(() => {
+            this.success = false
+          }, 2000);
+ 
+        } else if (res.success == false){
+          this.failed = true;
+          this.errorMsg = message;
+
+          setTimeout(() => {
+            this.failed = false
+          }, 2000);
+        }
+      },(error:any)=>{
+
+        console.log('Trip Details error', error)
+        console.error('status:', error.status);
+        console.error('success:', error.error.success);
+        console.error('message:', error.error.message);
+        console.error('http:', error.error.data.message);
+
+        const message = error.error.data.message
+        this.failed = true;
+        this.errorMsg = message;
+
+        setTimeout(() => {
+          this.failed = false
+        }, 2000);
+      }
+    )
+  }
+
   next() {
-    const url = `http://localhost:5173/?userid=${this.userDetails.user_uuid}`;
+    const url = `http://localhost:5173/?userid=${this.userDetails.user_uuid}&riderid=${this.tripDetails.data.trip.user.uuid}`;
     window.open(url, '_blank');
   }
 

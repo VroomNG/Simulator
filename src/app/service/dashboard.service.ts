@@ -26,16 +26,22 @@ export class DashboardService {
   const headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    // 'Authorization': `Bearer ${token}`,
   });
     return this.http.get<any>(`${this.baseUrl}/driver/trip/status/${trip_id}?longitude=${longitude}&latitude=${latitude}`,  { headers: headers });
   }
+
+  getTripDetails(trip_id:number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+      return this.http.get<any>(`${this.baseUrl}/driver/trip/show/${trip_id}`,  { headers: headers });
+    }
 
   accceptTripReq(trip_id:number, longitude: number, latitude: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      // 'Authorization': `Bearer ${token}`,
     });
     return this.http.put<any>(`${this.baseUrl}/driver/trip/accept/${trip_id}?longitude=${longitude}&latitude=${latitude}`, { headers: headers });
   }

@@ -1,14 +1,15 @@
 import { Injectable, Query } from '@angular/core';
 import SendBird from 'sendbird';
 
+
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
 
   sb: any;
-  APP_ID = '4F533191-EE4F-4F17-ACBA-5C440B4FEE34';
-  // APP_ID = '24775793-1E0D-4521-B0E2-97A3E6844639';
+  // APP_ID = '4F533191-EE4F-4F17-ACBA-5C440B4FEE34';
+  APP_ID = '0ECAC80D-9CF2-491B-AA64-A5BF65B416AD';
 
   init(id: string, nickname: string, profileUrl: string) {
   // Initialize SendBird
