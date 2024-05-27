@@ -50,7 +50,7 @@
       <app-toast type="regular" [message]="regularMsg" bgColor="#e0e0e0" *ngIf="regular"></app-toast>
       <button (click)="reload()" *ngIf="failed">
         <i class="fa-solid fa-rotate-right"></i>
-        <span class="mx-2">Get trip again</span>
+        <span class="mx-2">Get trips again</span>
       </button>
     </div>
   </div>
@@ -58,7 +58,17 @@
 
 <div class="w-full h-full flex justify-center" *ngIf="rideId">
    <div class=" w-[60%] h-[20%] pt-4">
-      <form (ngSubmit)="getOpenTrip()" #rideForm="ngForm">
+
+    <div class="h-[50%]">
+      <!-- <img src="https://giphy.com/gifs/nascar-racing-2021-motorsports-RydeOpty5tZofTendG"  /> -->
+    </div>
+    <div class="w-[20%]" >
+      <app-button buttonText="Get Open Trips" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="getOpenTrips()"></app-button>
+    </div>
+
+
+   
+      <!-- <form (ngSubmit)="getOpenTrip()" #rideForm="ngForm">
          <div class="form-group mb-3">
             <label>Enter Trip ID</label>
             <div>
@@ -67,17 +77,29 @@
                 placeholder="Enter Trip ID" />
             </div>
 
-           
-           
           </div>
         <div class="w-[20%]">
           <app-button buttonText="Get trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF"></app-button>
         </div>
-       </form>
+       </form> -->
    </div>
 
    
 
+</div>
+
+<div *ngIf="openTrips">
+    <div>
+        <div>
+          <h1>Trip Name:</h1>
+          <h2>Trip Id:</h2>
+          <div  *ngIf="acceptTrip " class="h-[40%] w-[20%]">
+            <app-button buttonText="Trip Details" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="getOpenTrip()"></app-button>  
+         </div>
+          
+
+        </div>
+    </div>
 </div>
 
 

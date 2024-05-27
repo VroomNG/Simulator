@@ -22,6 +22,16 @@ export class DashboardService {
  getOpenTripsById(trip_id:number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/driver/trip/show/${trip_id}`,);
   }
+
+  getOpenTrips(longitude: number, latitude: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    });
+    return this.http.get<any>(`${this.baseUrl}/driver/trip/get?longitude=${longitude}&latitude=${latitude}`,  { headers: headers });
+    }
+
+
  getTripStatus(trip_id:number,longitude: number, latitude: number): Observable<any> {
   const headers = new HttpHeaders({
     'Content-Type': 'application/json',

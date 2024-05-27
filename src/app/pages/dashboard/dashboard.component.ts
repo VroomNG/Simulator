@@ -17,11 +17,13 @@ export class DashboardComponent implements OnInit {
   failed:boolean = false;
   regular:boolean = false;
   regularMsg:any = 'Regular';
+ 
 
   storedString: string = '45892yuio';
 
   fetchSubscription!: Subscription;
   rideId: boolean = true;
+  openTrips:boolean = false;
   loading: boolean = false;
   alert: boolean = false;
   alertMsg: string = 'loading...';
@@ -37,6 +39,7 @@ export class DashboardComponent implements OnInit {
   }
 
   open_trips: any;
+  tripList:any;
   tripResponse: any;
   ongoingTrip: any;
   canceledTrip: any;
@@ -285,6 +288,65 @@ export class DashboardComponent implements OnInit {
 
             this.rideId = false;
             this.loading = false;
+
+            this.success = true;
+            this.successMsg =  message;
+
+            setTimeout(()=>{
+              this.success = false
+            },2000)
+             
+          }
+        },(error: any) => {
+
+          console.error('An error occurred:', error);
+          console.error('status:', error.status);
+          console.error('success:', error.error.success);
+          console.error('message:', error.error.message);
+          console.error('http:', error.error.data.message);
+
+          const message = error.error.data.message
+          this.failed = true;
+          this.errorMsg = message;
+          
+          this.regular = true;
+          this.regularMsg = 'No Trip Found!!'
+
+          setTimeout(() => {
+            this.failed = false
+            this.regular = false
+            window.location.reload()
+          }, 30000);
+          this.loading = false;
+        }
+
+      )
+    }, 1500)
+
+  }
+
+  getOpenTrips() {
+
+    const longitude = this.longitude
+    const lattitude = this.latitude
+
+    setTimeout(() => {
+      this.loading = true
+      this.rideId = !this.rideId
+    }, 500)
+
+    setTimeout(() => {
+      this.Dashboard.getOpenTrips(longitude,lattitude).subscribe(
+        (res: any) => {
+          console.log('Open Trips list',res)
+          const message = res.data.message
+
+          if(res.status == 200){
+            this.tripList = res.data
+
+            this.rideId = false;
+            this.loading = false;
+            this.openTrips = true;
 
             this.success = true;
             this.successMsg =  message;
