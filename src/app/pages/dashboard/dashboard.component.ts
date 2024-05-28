@@ -998,7 +998,8 @@ export class DashboardComponent implements OnInit {
   }
 
   chatApp() {
-    const url = `http://localhost:5173/?userid=${this.userDetails.user_uuid}&riderid=${this.tripDetails.data.trip.user.uuid}`;
+    // const url = `http://localhost:5173/?userid=${this.userDetails.user_uuid}&riderid=${this.tripDetails.data.trip.user.uuid}`;
+    const url = `https://chat-simulator-xi.vercel.app/?userid=${this.userDetails.user_uuid}&riderid=${this.tripDetails.data.trip.user.uuid}`;
     window.open(url, '_blank');
   }
   redo() {
