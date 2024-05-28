@@ -269,7 +269,65 @@ export class DashboardComponent implements OnInit {
     window.location.reload()
   }
 
-  getOpenTrip() {
+  getOpenTrip(uuid: any) {
+    
+    const trip_id = uuid;
+    setTimeout(() => {
+      this.loading = true
+      this.rideId = !this.rideId
+    }, 500)
+
+    setTimeout(() => {
+      this.Dashboard.getOpenTripsById(trip_id).subscribe(
+        (res: any) => {
+          console.log('response',res)
+          const message = res.data.message
+
+          if(res.status == 200){
+            this.open_trips = res.data
+
+            this.rideId = false;
+            this.loading = false;
+
+            this.success = true;
+            this.successMsg =  message;
+
+            this.openTrips = false
+
+            setTimeout(()=>{
+              this.success = false
+            },2000)
+             
+          }
+        },(error: any) => {
+
+          console.error('An error occurred:', error);
+          console.error('status:', error.status);
+          console.error('success:', error.error.success);
+          console.error('message:', error.error.message);
+          console.error('http:', error.error.data.message);
+
+          const message = error.error.data.message
+          this.failed = true;
+          this.errorMsg = message;
+          
+          this.regular = true;
+          this.regularMsg = 'No Trip Found!!'
+
+          setTimeout(() => {
+            this.failed = false
+            this.regular = false
+            window.location.reload()
+          }, 30000);
+          this.loading = false;
+        }
+
+      )
+    }, 1500)
+
+  }
+
+  getOpenTripById() {
     const trip_id = this.credentials.trip_id
 
     setTimeout(() => {
@@ -325,10 +383,11 @@ export class DashboardComponent implements OnInit {
 
   }
 
+
   getOpenTrips() {
 
-    const longitude = this.longitude
-    const lattitude = this.latitude
+    const longitude = 3.40810764049567
+    const lattitude = 6.43998479287182
 
     setTimeout(() => {
       this.loading = true
@@ -342,7 +401,8 @@ export class DashboardComponent implements OnInit {
           const message = res.data.message
 
           if(res.status == 200){
-            this.tripList = res.data
+            this.tripList = res.data.request_trips.data
+            console.log(this.tripList)
 
             this.rideId = false;
             this.loading = false;
@@ -508,7 +568,8 @@ export class DashboardComponent implements OnInit {
 
             this.success = true;
             this.successMsg = message
-            this.isCall = !this.isCall      
+            // this.isCall = !this.isCall   
+            this.isChat = false   
 
             setTimeout(() => {
               this.alert = false
@@ -656,6 +717,8 @@ export class DashboardComponent implements OnInit {
   
               this.success = true
               this.successMsg = message
+              this.completeTrip = false;
+              this.cancelTrip = false;
   
               setTimeout(() => {
                 this.alert = false;
@@ -842,10 +905,11 @@ export class DashboardComponent implements OnInit {
             }, 2000);
 
 
-            this.completeTrip = !this.completeTrip
-            this.cancelTrip = !this.cancelTrip
+            this.completeTrip = false;
+            this.cancelTrip = false;
 
-            this.rateTrip = !this.rateTrip
+            this.rateTrip = true
+            
 
             console.log('cancel message', res.data.message)
             
@@ -933,9 +997,12 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  next() {
+  chatApp() {
     const url = `http://localhost:5173/?userid=${this.userDetails.user_uuid}&riderid=${this.tripDetails.data.trip.user.uuid}`;
     window.open(url, '_blank');
+  }
+  redo() {
+    window.location.reload()
   }
 
 

@@ -62,13 +62,14 @@
     <div class="h-[50%]">
       <!-- <img src="https://giphy.com/gifs/nascar-racing-2021-motorsports-RydeOpty5tZofTendG"  /> -->
     </div>
+    <h1>Get Trips by open trips</h1>
     <div class="w-[20%]" >
       <app-button buttonText="Get Open Trips" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="getOpenTrips()"></app-button>
     </div>
 
 
    
-      <!-- <form (ngSubmit)="getOpenTrip()" #rideForm="ngForm">
+      <form (ngSubmit)="getOpenTripById()" #rideForm="ngForm">
          <div class="form-group mb-3">
             <label>Enter Trip ID</label>
             <div>
@@ -79,27 +80,33 @@
 
           </div>
         <div class="w-[20%]">
-          <app-button buttonText="Get trip" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF"></app-button>
+          <app-button type="submit" buttonText="Get trip by id" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF"></app-button>
         </div>
-       </form> -->
+       </form>
    </div>
 
    
 
 </div>
 
+
 <div *ngIf="openTrips">
     <div>
-        <div>
-          <h1>Trip Name:</h1>
-          <h2>Trip Id:</h2>
-          <div  *ngIf="acceptTrip " class="h-[40%] w-[20%]">
-            <app-button buttonText="Trip Details" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="getOpenTrip()"></app-button>  
-         </div>
+        <div *ngFor=" let trips of tripList ">
+          <h1>Trip ID: {{trips.uuid}}</h1>
+          <h2>Pickup Address: {{trips.from_address}}</h2>
+          <h2>Destination: {{trips.to_address}}</h2>
+          <h2>Distance: {{trips.distance}}km</h2>
+          <h2>Trip Amount: {{trips.trip_amount}}</h2>
           
-
+          <div *ngIf="acceptTrip " class="h-[40%] w-[20%]">
+            <app-button buttonText="Trip Details" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="getOpenTrip(trips.uuid)"></app-button>  
+         </div>
         </div>
     </div>
+</div>
+<div *ngIf="tripList < 1" class="w-full h-full flex items-center justify-center">
+  <h1 class="h1">No Open Trips Found Create Trip First</h1>
 </div>
 
 
@@ -138,9 +145,14 @@
 
                <div *ngIf="isChat" class="h-[50%] my-1">
                   <!-- <app-button buttonText="Chat" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="openChat(open_trips?.trip.uuid)"></app-button> -->
-                  <app-button buttonText="Chat Rider" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="next()"></app-button>
+                  <app-button buttonText="Chat Rider" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="chatApp()"></app-button>
                 
                </div>
+
+               <div *ngIf="!isChat && !cancelTrip && !acceptTrip && !startTrip && !completeTrip" class="h-[50%] my-1">
+                <app-button buttonText="Simulate again " borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="redo()"></app-button>
+              </div>
+           
                
                
            </div>
