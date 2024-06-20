@@ -13,10 +13,12 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   // login function
-  login(credentials: { email_or_phone: string; password: string, user_type: string, device_token: string }) {
+  login(credentials: { email_or_phone: string; password: string, device_token: string }) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      "x-api-public-key": "VR_PUBLIC_X5OEKoqTXPxr2B",
+      "x-api-secret-key": "VR_SECRET_AtUXf0YYkE6tGO"
     });
 
     return this.http.post(`${this.baseUrl}/login`, credentials, { headers: headers });
@@ -28,12 +30,10 @@ export class AuthService {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': `Bearer ${token}`,
+        "x-api-public-key": "VR_PUBLIC_X5OEKoqTXPxr2B",
+      "x-api-secret-key": "VR_SECRET_AtUXf0YYkE6tGO"
       });
-    //   const headers = {
-    //     "Authorization": "Bearer {YOUR_AUTH_KEY}",
-    //     "Content-Type": "application/json",
-    //     "Accept": "application/json",
-    // };
+  
       console.log('log out function',token)
       return this.http.post(`${this.baseUrl}/logout`, { headers: headers });
     }

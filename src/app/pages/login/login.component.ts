@@ -19,9 +19,7 @@ export class LoginComponent implements OnInit {
     credentials = {
       email_or_phone: '',
       password: '',
-      user_type: '2',
       device_token: "15545671"
-
     }
   
     constructor( 
