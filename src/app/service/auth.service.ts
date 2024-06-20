@@ -31,7 +31,7 @@ export class AuthService {
         'Accept': 'application/json',
         'Authorization': `Bearer ${token}`,
         "x-api-public-key": "VR_PUBLIC_X5OEKoqTXPxr2B",
-      "x-api-secret-key": "VR_SECRET_AtUXf0YYkE6tGO"
+        "x-api-secret-key": "VR_SECRET_AtUXf0YYkE6tGO"
       });
   
       console.log('log out function',token)
